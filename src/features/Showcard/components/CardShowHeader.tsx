@@ -18,7 +18,7 @@ export const CardShowHeader = ({
   handleAddToFavorites,
 }: CardShowHeaderProps) => (
   <CardHeader className="w-full">
-    <CardTitle>{title}</CardTitle>
+    <CardTitle className="line-clamp-1">{title}</CardTitle>
     <CardAction>
       <Button
         className="group"

@@ -1,6 +1,7 @@
 import { Plus, Search } from "lucide-react"
 import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
+import Link from "next/link"
 
 export const Header = () => {
   return (
@@ -12,12 +13,14 @@ export const Header = () => {
         <Input placeholder="Procurar série" />
         <Button className="text-muted-foreground" variant="outline">
           <Search />
-          <p>Buscar</p>
+          <p className="hidden sm:block">Buscar</p>
         </Button>
+        <Link href="/nova-serie">
         <Button>
           <Plus />
-          <p>Adicionar</p>
+          <p className="hidden sm:block">Adicionar</p>
         </Button>
+        </Link>
       </div>
     </header>
   )

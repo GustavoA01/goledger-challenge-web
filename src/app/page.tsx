@@ -1,6 +1,4 @@
 import { Header } from "../components/Header"
-import { TvShowCard } from "../features/container/TvShowCard"
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
 import { APIEpisodeResponseType, APISeasonResponseType } from "../data/types"
 import { services } from "../services"
@@ -10,7 +8,6 @@ const Home = async () => {
   const tvShowsResponse = await services.tvShows.getAll()
   const episodesResponse = await services.episodes.getAll()
   const seasonsResponse = await services.seasons.getAll()
-
   const tvShows = []
 
   const getSeasonsWithEpisodes = (tvShowKey: string) => {
@@ -52,8 +49,6 @@ const Home = async () => {
           </TabsContent>
           <TabsContent value="favorites">Favorites</TabsContent>
         </Tabs>
-
-        
       </main>
     </div>
   )

@@ -4,7 +4,7 @@ import {
   APISeasonResponseType,
   TvShowType,
 } from "../data/types"
-import { TvShowCard } from "../features/container/TvShowCard"
+import { TvShowCard } from "../features/Showcard/container/TvShowCard"
 
 type TvShowCardProps = TvShowType & {
   seasonWithEpisodes: {
@@ -15,7 +15,7 @@ type TvShowCardProps = TvShowType & {
 
 export const ShowsTab = ({ tvShows }: { tvShows: TvShowCardProps[] }) => {
   return (
-    <div className="flex-col sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="flex-col max-sm:space-y-4 sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {tvShows.map((tvShow) => (
         <TvShowCard
           key={tvShow["@key"]}
