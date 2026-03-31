@@ -4,9 +4,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
-body{
-  button,a{
-    cursor:pointer
+body {
+  button,
+  a {
+    cursor: pointer;
   }
 }
 
@@ -91,36 +92,37 @@ body{
 
 .dark {
   --background: #121212;
-  --foreground: #E0E0E0;
-  --card: #1E1E1E;
-  --card-foreground: #E0E0E0;
-  --popover: #1E1E1E;
-  --popover-foreground: #E0E0E0;
-  --primary: #2979FF;
-  --primary-foreground: #E0E0E0;
-  --secondary: #9E9E9E;
+  --foreground: #e0e0e0;
+  --card: #1e1e1e;
+  --card-foreground: #e0e0e0;
+  --popover: #1e1e1e;
+  --popover-foreground: #e0e0e0;
+  --primary: #e4b616;
+  --primary-foreground: #121212;
+  --secondary: #9e9e9e;
   --secondary-foreground: #121212;
-  --muted: #1E1E1E;
-  --muted-foreground: #9E9E9E;
-  --accent: #2979FF;
-  --accent-foreground: #E0E0E0;
-  --destructive: #CF6679;
-  --border: #1E1E1E;
-  --input: #1E1E1E;
-  --ring: #2979FF;
-  --chart-1: #2979FF;
-  --chart-2: #1C5DCE;
-  --chart-3: #CF6679;
-  --chart-4: #9A4D5A;
-  --chart-5: #9E9E9E;
-  --sidebar: #1E1E1E;
-  --sidebar-foreground: #E0E0E0;
-  --sidebar-primary: #2979FF;
-  --sidebar-primary-foreground: #E0E0E0;
+  --muted: #1e1e1e;
+  --muted-foreground: #9e9e9e;
+  --accent: #e4b616;
+  --accent-foreground: #121212;
+  --destructive: #cf6679;
+  --destructive-foreground: #121212;
+  --border: #2a2a2a;
+  --input: #2a2a2a;
+  --ring: #e4b616;
+  --chart-1: #e4b616;
+  --chart-2: #1c5dce;
+  --chart-3: #cf6679;
+  --chart-4: #9a4d5a;
+  --chart-5: #9e9e9e;
+  --sidebar: #1e1e1e;
+  --sidebar-foreground: #e0e0e0;
+  --sidebar-primary: #e4b616;
+  --sidebar-primary-foreground: #121212;
   --sidebar-accent: #121212;
-  --sidebar-accent-foreground: #E0E0E0;
+  --sidebar-accent-foreground: #e0e0e0;
   --sidebar-border: #121212;
-  --sidebar-ring: #2979FF;
+  --sidebar-ring: #e4b616;
 }
 
 @layer base {

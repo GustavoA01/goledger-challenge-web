@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import { CardAction, CardHeader, CardTitle } from "@/src/components/ui/card"
 import { Bookmark, EllipsisVertical } from "lucide-react"
 import {
@@ -7,6 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu"
+import { Button } from "@/src/components/ui/button"
 
 type CardShowHeaderProps = {
   title: string
@@ -19,11 +19,11 @@ export const CardShowHeader = ({
 }: CardShowHeaderProps) => (
   <CardHeader className="w-full">
     <CardTitle className="line-clamp-1">{title}</CardTitle>
-    <CardAction>
+    <CardAction className="space-x-2">
       <Button
         className="group"
         onClick={handleAddToFavorites}
-        variant="outline"
+        variant="ghost"
       >
         <Bookmark className="group-hover:text-primary transition-all duration-200 h-6 w-6" />
       </Button>
