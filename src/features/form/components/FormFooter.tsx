@@ -8,6 +8,6 @@ export const FormFooter = () => (
         Cancelar
       </Button>
     </Link>
-    <Button>Continuar</Button>
+    <Button>Salvar</Button>
   </div>
 )

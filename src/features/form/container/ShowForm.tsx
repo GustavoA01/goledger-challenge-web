@@ -3,8 +3,15 @@ import { useState } from "react"
 import { DetailsSection } from "../components/DetailsSection"
 import { FormFooter } from "../components/FormFooter"
 import { SeasonsSection } from "../components/SeasonsSection"
+import { FormProvider, useForm } from "react-hook-form"
+import { TvShowFormType, tvShowSchema } from "@/src/data/schemas"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 export const ShowForm = () => {
+  const methods = useForm<TvShowFormType>({
+    resolver: zodResolver(tvShowSchema),
+  })
+  const { handleSubmit } = methods
   const [seasons, setSeasons] = useState<Record<number, { episodes: number }>>({
     0: { episodes: 1 },
   })
@@ -33,19 +40,23 @@ export const ShowForm = () => {
     }
   }
 
-  const numberOfSeasons = Object.keys(seasons).length
+  const handleSaveShow = (data: TvShowFormType) => {
+    console.log("Dados do formulário:", data)
+  }
 
   return (
-    <form className="mt-8 space-y-6">
-      <DetailsSection />
-      <SeasonsSection
-        numberOfSeasons={numberOfSeasons}
-        updateEpisodes={updateEpisodes}
-        seasons={seasons}
-        removeSeason={removeSeason}
-        addSeason={addSeason}
-      />
-      <FormFooter />
-    </form>
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(handleSaveShow)} className="mt-8 space-y-6">
+        <DetailsSection />
+        <SeasonsSection
+          seasons={seasons}
+          numberOfSeasons={Object.keys(seasons).length}
+          updateEpisodes={updateEpisodes}
+          removeSeason={removeSeason}
+          addSeason={addSeason}
+        />
+        <FormFooter />
+      </form>
+    </FormProvider>
   )
 }
