@@ -6,7 +6,6 @@ import { TvShowType } from "../../../data/types"
 import { useRouter } from "next/navigation"
 
 type TvShowCardProps = Omit<TvShowType, "@key" | "description"> & {
-  id: string
   numberOfSeasons: number
   numberOfEpisodes: number
   recommendedAge: number
@@ -17,13 +16,12 @@ export const TvShowCard = ({
   numberOfSeasons,
   numberOfEpisodes,
   recommendedAge,
-  id,
 }: TvShowCardProps) => {
   const { push } = useRouter()
 
   return (
     <Card
-      onClick={() => push(`/detalhes/${id}`)}
+      onClick={() => push(`/detalhes/${encodeURIComponent(title)}`)}
       className="w-full cursor-pointer group"
     >
       <CardShowHeader

@@ -19,6 +19,15 @@ export const getAllTvShows = async () => {
       },
     },
   })
+  return response.data as { metadata: null; result: APITvShowsResponseType[] }
+}
 
-  return response.data as {metadata: null, result: APITvShowsResponseType[]}
+export const getTvShowByKey = async (key: string) => {
+  const response = await api.post("/query/readAsset", {
+    key: {
+      "@assetType": "tvShows",
+      title: key,
+    },
+  })
+  return response.data 
 }

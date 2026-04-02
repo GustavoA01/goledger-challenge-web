@@ -14,7 +14,6 @@ export const ShowsTab = ({ tvShows }: { tvShows: ShowTabProps[] }) => {
       {tvShows.map((tvShow) => (
         <TvShowCard
           key={tvShow["@key"]}
-          id={tvShow["@key"]}
           title={tvShow.title}
           recommendedAge={tvShow.recommendedAge}
           numberOfSeasons={tvShow.numberOfSeasons}
