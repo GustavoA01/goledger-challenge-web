@@ -45,7 +45,7 @@ export interface APIEpisodeResponseType {
   title: string;
   episodeNumber: number;
   description: string;
-  rating: number;
+  rating?: number;
   releaseDate: string;
   season: {
     "@assetType": "seasons";

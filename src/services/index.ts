@@ -1,13 +1,18 @@
-import { episodes } from "./episodes";
-import { createSeasons, getAllSeasons } from "./seasons";
-import { createTvShow, getAllTvShows } from "./tvShows";
+import { createEpisodes, getAllEpisodes } from "./episodes"
+import { createSeasons, getAllSeasons } from "./seasons"
+import { createTvShow, getAllTvShows } from "./tvShows"
 
 export const services = {
-  tvShows:{
+  tvShows: {
     createTvShow,
-    getAllTvShows
-  }, seasons:{
+    getAllTvShows,
+  },
+  seasons: {
     createSeasons,
-    getAllSeasons
-  } ,episodes
-};
+    getAllSeasons,
+  },
+  episodes: {
+    createEpisodes,
+    getAllEpisodes,
+  },
+}

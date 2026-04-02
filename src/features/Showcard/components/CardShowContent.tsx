@@ -1,29 +1,32 @@
 import { CardContent } from "@/src/components/ui/card"
-import { APIEpisodeResponseType, APISeasonResponseType } from "@/src/data/types"
 import { Dot } from "lucide-react"
 
 type CardShowContentProps = {
-  recommendedAge: number
-  seasonWithEpisodes: {
-    seasons: APISeasonResponseType[]
-    episodes: APIEpisodeResponseType[]
-  }
+  numberOfSeasons: number
+  numberOfEpisodes: number
 }
 
 export const CardShowContent = ({
-  recommendedAge,
-  seasonWithEpisodes,
-}: CardShowContentProps) => (
-  <CardContent>
-    <span>{recommendedAge === 0 ? "Livre" : `${recommendedAge} +`}</span>
-    {seasonWithEpisodes.seasons && (
-      <p>{seasonWithEpisodes.seasons?.length} temporadas</p>
-    )}
-    {seasonWithEpisodes?.episodes && (
-      <>
-        <Dot />
-        <p>{seasonWithEpisodes.episodes.length} episódios</p>
-      </>
-    )}
-  </CardContent>
-)
+  numberOfSeasons,
+  numberOfEpisodes,
+}: CardShowContentProps) => {
+  return (
+    <CardContent>
+      <div className="flex items-center">
+        {numberOfSeasons > 0 && (
+          <p>
+            {numberOfSeasons > 1
+              ? `${numberOfSeasons} temporadas`
+              : "1 temporada"}
+          </p>
+        )}
+        {numberOfEpisodes > 0 && (
+          <>
+            <Dot className="text-primary" />
+            <p>{numberOfEpisodes} episódios</p>
+          </>
+        )}
+      </div>
+    </CardContent>
+  )
+}

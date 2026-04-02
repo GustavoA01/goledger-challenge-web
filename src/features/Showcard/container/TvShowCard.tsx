@@ -2,30 +2,38 @@
 import { Card } from "@/src/components/ui/card"
 import { CardShowContent } from "../components/CardShowContent"
 import { CardShowHeader } from "../components/CardShowHeader"
-import {
-  APIEpisodeResponseType,
-  APISeasonResponseType,
-  TvShowType,
-} from "../../../data/types"
+import { TvShowType } from "../../../data/types"
+import { useRouter } from "next/navigation"
 
-type TvShowCardProps = Omit<TvShowType, "@key"> & {
-  seasonWithEpisodes: {
-    seasons: APISeasonResponseType[]
-    episodes: APIEpisodeResponseType[]
-  }
+type TvShowCardProps = Omit<TvShowType, "@key" | "description"> & {
+  id: string
+  numberOfSeasons: number
+  numberOfEpisodes: number
+  recommendedAge: number
 }
 
 export const TvShowCard = ({
   title,
+  numberOfSeasons,
+  numberOfEpisodes,
   recommendedAge,
-  seasonWithEpisodes,
+  id,
 }: TvShowCardProps) => {
+  const { push } = useRouter()
+
   return (
-    <Card className="w-full cursor-pointer">
-      <CardShowHeader handleAddToFavorites={() => {}} title={title} />
-      <CardShowContent
+    <Card
+      onClick={() => push(`/detalhes/${id}`)}
+      className="w-full cursor-pointer group"
+    >
+      <CardShowHeader
+        handleAddToFavorites={() => {}}
+        title={title}
         recommendedAge={recommendedAge}
-        seasonWithEpisodes={seasonWithEpisodes}
+      />
+      <CardShowContent
+        numberOfSeasons={numberOfSeasons}
+        numberOfEpisodes={numberOfEpisodes}
       />
     </Card>
   )

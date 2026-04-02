@@ -6,31 +6,30 @@ import { ShowsTab } from "../components/ShowsTab"
 
 const Home = async () => {
   const tvShowsResponse = await services.tvShows.getAllTvShows()
-  const episodesResponse = await services.episodes.getAll()
-  const seasonsResponse = await services.seasons.getAll()
+  const episodesResponse = await services.episodes.getAllEpisodes()
+  const seasonsResponse = await services.seasons.getAllSeasons()
   const tvShows = []
 
-  const getSeasonsWithEpisodes = (tvShowKey: string) => {
-    const seasons = seasonsResponse.data.result.filter(
-      (season: APISeasonResponseType) => season.tvShow["@key"] === tvShowKey,
+  for (const tvShow of tvShowsResponse.result) {
+    const seasonsOfShow = seasonsResponse?.data.result.filter(
+      (season: APISeasonResponseType) =>
+        season.tvShow["@key"] === tvShow["@key"],
     )
 
-    return seasons.map((season: APISeasonResponseType) => ({
-      ...season,
-      episodes: episodesResponse.data.result.filter(
-        (episode: APIEpisodeResponseType) =>
-          episode.season["@key"] === season["@key"],
-      ),
-    }))
-  }
+    const seasonKeys = seasonsOfShow?.map((season) => season["@key"])
 
-  for (const tvShow of tvShowsResponse.result) {
+    const numberOfEpisodes = episodesResponse.data.result.filter(
+      (episode: APIEpisodeResponseType) =>
+        seasonKeys?.includes(episode.season["@key"]),
+    ).length
+
     const show = {
       "@key": tvShow["@key"],
       title: tvShow.title,
       description: tvShow.description,
       recommendedAge: tvShow.recommendedAge,
-      seasonWithEpisodes: getSeasonsWithEpisodes(tvShow["@key"]),
+      numberOfSeasons: seasonsOfShow?.length,
+      numberOfEpisodes: numberOfEpisodes,
     }
     tvShows.push(show)
   }

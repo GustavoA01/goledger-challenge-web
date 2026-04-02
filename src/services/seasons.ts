@@ -1,19 +1,35 @@
 import { api } from "@/lib/axios"
-import { SeasonType } from "../data/types"
+import { APISeasonResponseType, SeasonType } from "../data/types"
 
-export const createSeasons = async (data: Omit<SeasonType, "@key">[]) =>
-  await api.post("/invoke/createAsset", {
-    asset: data.map((season) => ({ "@assetType": "seasons", ...season })),
-  })
+export const createSeasons = async (data: Omit<SeasonType, "@key">[]) => {
+  try {
+    const respoonse = await api.post<APISeasonResponseType[]>(
+      "/invoke/createAsset",
+      {
+        asset: data.map((season) => ({ "@assetType": "seasons", ...season })),
+      },
+    )
+    return respoonse
+  } catch (error) {
+    console.error("Error creating seasons:", error)
+  }
+}
 
 export const getAllSeasons = async () => {
-  const response = await api.post("/query/search", {
-    query: {
-      selector: {
-        "@assetType": "seasons",
+  try {
+    const response = await api.post<{ result: APISeasonResponseType[] }>(
+      "/query/search",
+      {
+        query: {
+          selector: {
+            "@assetType": "seasons",
+          },
+        },
       },
-    },
-  })
+    )
 
-  return response
+    return response
+  } catch (error) {
+    console.error("Error fetching seasons:", error)
+  }
 }

@@ -1,18 +1,20 @@
 import { api } from "@/lib/axios"
-import { EpisodeType } from "../data/types"
+import { APIEpisodeResponseType, EpisodeType } from "../data/types"
 
-export const episodes = {
-  post: async (data:EpisodeType) => await api.post("/invoke/createAsset", {
-    asset: [{ "@assetType": "episodes", ...data }], 
-  }),
-  getAll: async () => {
-    const response = await api.post("/query/search", {
-      query: {
-        selector: {
-          "@assetType": "episodes",
-        },
+export const createEpisodes = async (data:  Omit<EpisodeType, "@key">[]) =>{
+  const response =  await api.post<APIEpisodeResponseType[]>("/invoke/createAsset", {
+    asset: data.map((episode) => ({ "@assetType": "episodes", ...episode })),
+  })
+  return response
+}
+
+export const getAllEpisodes = async () => {
+  const response = await api.post<{result: APIEpisodeResponseType[]}>("/query/search", {
+    query: {
+      selector: {
+        "@assetType": "episodes",
       },
-    })
-    return response
-  },
+    },
+  })
+  return response
 }

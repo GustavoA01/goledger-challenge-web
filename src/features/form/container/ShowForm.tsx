@@ -1,52 +1,20 @@
 "use client"
-import { useState } from "react"
 import { DetailsSection } from "../components/DetailsSection"
 import { FormFooter } from "../components/FormFooter"
 import { SeasonsSection } from "../components/SeasonsSection"
-import { FormProvider, useForm } from "react-hook-form"
-import { TvShowFormType, tvShowSchema } from "@/src/data/schemas"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { api } from "@/lib/axios"
+import { FormProvider } from "react-hook-form"
+import { TvShowFormType } from "@/src/data/schemas"
 import { services } from "@/src/services"
-import { TvShowType } from "@/src/data/types"
+import { EpisodeType, SeasonType, TvShowType } from "@/src/data/types"
+import { useShowForm } from "../hooks/useShowForm"
 
 export const ShowForm = () => {
-  const methods = useForm<TvShowFormType>({
-    resolver: zodResolver(tvShowSchema),
-  })
-  const { handleSubmit } = methods
-  const [seasons, setSeasons] = useState<Record<number, { episodes: number }>>({
-    0: { episodes: 1 },
-  })
-
-  const updateEpisodes = (seasonIndex: number, episodes: number) => {
-    setSeasons((prev) => ({
-      ...prev,
-      [seasonIndex]: { episodes: episodes > 0 ? episodes : 1 },
-    }))
-  }
-
-  const addSeason = () => {
-    const newIndex = Object.keys(seasons).length
-    setSeasons((prev) => ({
-      ...prev,
-      [newIndex]: { episodes: 1 },
-    }))
-  }
-
-  const removeSeason = () => {
-    const keys = Object.keys(seasons)
-    if (keys.length > 1) {
-      const newSeasons = { ...seasons }
-      delete newSeasons[Number(keys[keys.length - 1])]
-      setSeasons(newSeasons)
-    }
-  }
+  const { addSeason, methods, removeSeason, updateEpisodes, seasons } =
+    useShowForm()
 
   const handleSaveShow = async (data: TvShowFormType) => {
-    console.log("Dados do formulário:", data)
     const formattedAge =
-      data.recommendedAge === "Livre" ? "0" : data.recommendedAge
+      data.recommendedAge === "Livre" ? 0 : parseInt(data.recommendedAge)
     const tvShow: Omit<TvShowType, "@key"> = {
       title: data.title,
       description: data.description,
@@ -55,12 +23,11 @@ export const ShowForm = () => {
 
     try {
       const tvShowResponse = await services.tvShows.createTvShow(tvShow)
-      console.log("Série criada:", tvShowResponse)
-      const tvShowKey = tvShowResponse.data["@key"]
+      const tvShowKey = tvShowResponse.data[0]["@key"]
       const seasonsToCreate = []
 
       for (let i = 0; i < Object.keys(seasons).length; i++) {
-        const seasonToAdd = {
+        const seasonToAdd: Omit<SeasonType, "@key"> = {
           year: data.seasons[i].year,
           number: i + 1,
           tvShow: { "@assetType": "tvShows" as const, "@key": tvShowKey },
@@ -68,8 +35,36 @@ export const ShowForm = () => {
         seasonsToCreate.push(seasonToAdd)
       }
 
-      const seasonsResponse = await services.seasons.createSeasons(seasonsToCreate)
-      console.log("Temporadas criadas:", seasonsResponse)
+      const seasonsResponse =
+        await services.seasons.createSeasons(seasonsToCreate)
+      const episodesToCreate = []
+
+      if (!seasonsResponse || !seasonsResponse.data) {
+        console.error("Erro: seasonsResponse está undefined")
+        return
+      }
+
+      for (let i = 0; i < seasonsResponse.data.length; i++) {
+        const seasonKey = seasonsResponse.data[i]["@key"]
+        for (let j = 0; j < data.seasons[i].episodes.length; j++) {
+          const episodeToAdd: Omit<EpisodeType, "@key"> = {
+            title: data.seasons[i].episodes[j].title,
+            description: data.seasons[i].episodes[j].description,
+            episodeNumber: j + 1,
+            releaseDate: data.seasons[i].episodes[j].releaseDate.toISOString(),
+            season: {
+              "@assetType": "seasons" as const,
+              "@key": seasonKey,
+            },
+          }
+          if (data.seasons[i].episodes[j].rating) {
+            episodeToAdd.rating = data.seasons[i].episodes[j].rating
+          }
+          episodesToCreate.push(episodeToAdd)
+        }
+      }
+
+      await services.episodes.createEpisodes(episodesToCreate)
     } catch (error) {
       console.error("Erro ao salvar a série:", error)
     }
@@ -77,7 +72,10 @@ export const ShowForm = () => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(handleSaveShow)} className="mt-8 space-y-6">
+      <form
+        onSubmit={methods.handleSubmit(handleSaveShow)}
+        className="mt-8 space-y-6"
+      >
         <DetailsSection />
         <SeasonsSection
           seasons={seasons}
