@@ -1,5 +1,5 @@
 import { createEpisodes, getAllEpisodes } from "./episodes"
-import { createSeasons, getAllSeasons, getSeasonsByKey } from "./seasons"
+import { createSeasons, getAllSeasons } from "./seasons"
 import { createTvShow, getAllTvShows, getTvShowByKey } from "./tvShows"
 
 export const services = {
@@ -11,7 +11,6 @@ export const services = {
   seasons: {
     createSeasons,
     getAllSeasons,
-    getSeasonsByKey
   },
   episodes: {
     createEpisodes,

@@ -22,7 +22,7 @@ export const TvShowCard = ({
   return (
     <Card
       onClick={() => push(`/detalhes/${encodeURIComponent(title)}`)}
-      className="w-full cursor-pointer group"
+      className="w-full cursor-pointer group border hover:border-accent transition-all duration-200"
     >
       <CardShowHeader
         handleAddToFavorites={() => {}}

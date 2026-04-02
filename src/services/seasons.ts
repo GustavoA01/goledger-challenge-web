@@ -27,27 +27,8 @@ export const getAllSeasons = async () => {
         },
       },
     )
-
     return response
   } catch (error) {
     console.error("Error fetching seasons:", error)
-  }
-}
-
-export const getSeasonsByKey = async (tvShowKey:string, numberKey: number) => {
-  try{
-
-    const response = await api.post("/query/readAsset", {
-      key: {
-        "@assetType": "seasons",
-        number: numberKey,
-        tvShow:{
-          title: tvShowKey
-        }
-      },
-    })
-    return response 
-  }catch(error){
-    console.error("Error fetching season by key:", error)
   }
 }
