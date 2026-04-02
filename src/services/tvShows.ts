@@ -1,21 +1,19 @@
 import { api } from "@/lib/axios"
-import { APITvShowsResponseType, TvShowType } from "../data/types"
+import { APISeasonResponseType, APITvShowsResponseType, TvShowType } from "../data/types"
 
-export const tvShows = {
-  post: async (data: TvShowType) => await api.post("/invoke/createAsset", data),
-  getAll: async () => {
-    const response = await api.post("/query/search", {
-      query: {
-        selector: {
-          "@assetType": "tvShows",
-        },
+export const createTvShow = async (data: Omit<TvShowType, "@key">) =>
+  api.post("/invoke/createAsset", {
+    asset: [{ "@assetType": "tvShows", ...data }],
+  }) as Promise<{ data: APITvShowsResponseType}>
+
+export const getAllTvShows = async () => {
+  const response = await api.post("/query/search", {
+    query: {
+      selector: {
+        "@assetType": "tvShows",
       },
-    })
-    
-    const tvShows = {
-      metadata: response.data.metadata,
-      result: response.data.result as APITvShowsResponseType[],
-    }
-    return tvShows
-  },
+    },
+  })
+
+  return response.data as APITvShowsResponseType[]
 }

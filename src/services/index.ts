@@ -1,7 +1,13 @@
 import { episodes } from "./episodes";
-import { seasons } from "./seasons";
-import { tvShows } from "./tvShows";
+import { createSeasons, getAllSeasons } from "./seasons";
+import { createTvShow, getAllTvShows } from "./tvShows";
 
 export const services = {
-  tvShows, episodes,seasons
+  tvShows:{
+    createTvShow,
+    getAllTvShows
+  }, seasons:{
+    createSeasons,
+    getAllSeasons
+  } ,episodes
 };

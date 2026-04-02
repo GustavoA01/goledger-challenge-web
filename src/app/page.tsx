@@ -5,7 +5,7 @@ import { services } from "../services"
 import { ShowsTab } from "../components/ShowsTab"
 
 const Home = async () => {
-  const tvShowsResponse = await services.tvShows.getAll()
+  const tvShowsResponse = await services.tvShows.getAllTvShows()
   const episodesResponse = await services.episodes.getAll()
   const seasonsResponse = await services.seasons.getAll()
   const tvShows = []
