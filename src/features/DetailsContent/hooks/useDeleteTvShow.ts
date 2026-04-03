@@ -13,7 +13,7 @@ export const useDeleteTvShow = () => {
       push("/")
     },
     onError: (error: AxiosError) => {
-      console.error(error)
+      console.error(error.message)
       toast.error("Ocorreu um erro ao excluir série")
     },
   })

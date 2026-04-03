@@ -11,6 +11,7 @@ type FormLabelInputProps<T extends FieldValues> = {
   register: UseFormRegister<T>
   error: FieldError | undefined
   transformToNumber?: (value: string) => number | undefined
+  disabled?: boolean
 }
 
 export const FormLabelInput = <T extends FieldValues>({
@@ -22,12 +23,14 @@ export const FormLabelInput = <T extends FieldValues>({
   register,
   error,
   transformToNumber,
+  disabled = false,
 }: FormLabelInputProps<T>) => (
   <div className={`space-y-2 ${className}`}>
     <Label>{label}</Label>
     <Input
       type={inputType}
       placeholder={placeholder}
+      disabled={disabled}
       {...register(
         name,
         transformToNumber ? { setValueAs: transformToNumber } : {},

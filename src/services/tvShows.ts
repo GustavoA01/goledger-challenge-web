@@ -41,3 +41,13 @@ export const deleteTvShow = async (key: string) => {
   })
   return response
 }
+
+export const updateTvShow = async (data: Omit<TvShowType, "@key">) => {
+  const response = await api.put("/invoke/updateAsset", {
+    update: {
+      "@assetType": "tvShows",
+      ...data
+    },
+  })
+  return response
+}

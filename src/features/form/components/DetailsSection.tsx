@@ -11,7 +11,7 @@ import { useFormContext } from "react-hook-form"
 import { FormLabelInput } from "./FormLabelInput"
 import { TvShowFormType } from "@/src/data/schemas"
 
-export const DetailsSection = () => {
+export const DetailsSection = ({disableTitle}: { disableTitle?: boolean }) => {
   const {
     register,
     formState: { errors },
@@ -29,6 +29,7 @@ export const DetailsSection = () => {
           placeholder="Ex: Breaking Bad"
           error={errors.title}
           register={register}
+          disabled={disableTitle}
         />
 
         <div className="space-y-2">

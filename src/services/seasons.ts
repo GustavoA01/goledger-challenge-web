@@ -9,7 +9,7 @@ export const createSeasons = async (data: Omit<SeasonType, "@key">[]) => {
         asset: data.map((season) => ({ "@assetType": "seasons", ...season })),
       },
     )
-    return respoonse
+    return respoonse.data
   } catch (error) {
     console.error("Error creating seasons:", error)
   }
@@ -31,4 +31,15 @@ export const getAllSeasons = async () => {
   } catch (error) {
     console.error("Error fetching seasons:", error)
   }
+}
+
+export const updateSeason = async (data: Omit<SeasonType, "@key">) => {
+  console.log("Dados para atualização da season:", data)
+  const response = await api.put("/invoke/updateAsset", {
+    update: {
+      "@assetType": "seasons",
+      ...data,
+    },
+  })
+  return response
 }

@@ -18,3 +18,13 @@ export const getAllEpisodes = async () => {
   })
   return response
 }
+
+export const updateEpisode = async (data: Omit<EpisodeType, "@key">) => {
+  const response = await api.put("/invoke/updateAsset", {
+    update: {
+      "@assetType": "episodes",
+      ...data
+    },
+  })
+  return response
+}
