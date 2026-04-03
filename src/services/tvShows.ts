@@ -29,5 +29,15 @@ export const getTvShowByKey = async (key: string) => {
       title: key,
     },
   })
-  return response.data 
+  return response.data
+}
+
+export const deleteTvShow = async (key: string) => {
+  const response = await api.post("/invoke/deleteAsset", {
+    key: {
+      "@assetType": "tvShows",
+      title: key,
+    },
+  })
+  return response
 }

@@ -1,8 +1,10 @@
 import { Button } from "@/src/components/ui/button"
-import { ArrowLeft, Bookmark, Edit, Trash } from "lucide-react"
+import { Dialog } from "@/src/components/ui/dialog"
+import { ArrowLeft, Bookmark, Edit } from "lucide-react"
 import Link from "next/link"
+import { ConfirmDelete } from "../container/ConfirmDelete"
 
-export const DetailsHeader = () => (
+export const DetailsHeader = ({ tvShowTitle }: { tvShowTitle: string }) => (
   <header className="flex justify-between items-center mb-8">
     <Link href="/">
       <Button variant="ghost" className="rounded-full">
@@ -18,9 +20,9 @@ export const DetailsHeader = () => (
         <Edit className="h-6 w-6" />
         <p>Editar Série</p>
       </Button>
-      <Button variant="destructive" className="rounded-full">
-        <Trash className="h-6 w-6" />
-      </Button>
+      <Dialog>
+        <ConfirmDelete tvShowTitle={tvShowTitle} />
+      </Dialog>
     </div>
   </header>
 )

@@ -27,11 +27,6 @@ export const CardShowHeader = ({
       {title}
     </CardTitle>
     <CardAction className="space-x-2 items-center">
-      <span
-        className={`border p-1 font-font-semibold rounded-md ${borderColor[recommendedAge] || "border-gray-800"}`}
-      >
-        {recommendedAge === 0 ? "Livre" : `${recommendedAge}+`}
-      </span>
       <Button
         className="group/bookmark"
         onClick={handleAddToFavorites}
@@ -39,6 +34,11 @@ export const CardShowHeader = ({
       >
         <Bookmark className="group-hover/bookmark:text-primary transition-all duration-200 h-6 w-6" />
       </Button>
+      <span
+        className={`border p-1 font-font-semibold rounded-md ${borderColor[recommendedAge] || "border-gray-800"}`}
+      >
+        {recommendedAge === 0 ? "Livre" : `${recommendedAge}+`}
+      </span>
     </CardAction>
   </CardHeader>
 )
