@@ -1,5 +1,5 @@
 import { DatePicker } from "@/src/components/DatePicker"
-import { FormLabelInput } from "./FormLabelInput"
+import { FormLabelInput } from "../../../components/FormLabelInput"
 import { Controller, useFormContext } from "react-hook-form"
 import { TvShowFormType } from "@/src/data/schemas"
 import { Label } from "@/src/components/ui/label"

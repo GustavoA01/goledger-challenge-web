@@ -70,7 +70,7 @@ export interface APIWatchlistResponseType {
   tvShows: {
     "@assetType": "tvShows";
     "@key": string;
-  }[];
+  }[] | undefined;
 }
 
 export type WatchlistType = Pick<

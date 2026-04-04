@@ -14,6 +14,7 @@ export const ShowForm = ({ titleKey }: { titleKey?: string }) => {
     seasons,
     onSuccess,
     handleSaveShow,
+    back
   } = useShowForm(titleKey)
 
   return (
@@ -30,7 +31,7 @@ export const ShowForm = ({ titleKey }: { titleKey?: string }) => {
           removeSeason={removeSeason}
           addSeason={addSeason}
         />
-        <FormFooter onSuccess={onSuccess} />
+        <FormFooter goBack={back} onSuccess={onSuccess} />
       </form>
     </FormProvider>
   )

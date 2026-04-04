@@ -16,7 +16,7 @@ const episodeSchema = z.object({
 const seasonSchema = z.object({
   year: z
     .number({ message: "Ano obrigatório" })
-    .min(1900)
+    .min(1900, "Ano deve ser entre 1900 e 2030")
     .max(2030, "Ano deve ser entre 1900 e 2030"),
   episodes: z.array(episodeSchema),
 })
@@ -30,4 +30,12 @@ export const tvShowSchema = z.object({
   seasons: z.array(seasonSchema),
 })
 
+export const watchListSchema = z.object({
+  title: z.string().min(1, "Título obrigatório"),
+  description: z
+    .string()
+    .min(10, "A descrição deve conter pelo menos 10 caracteres"),
+})
+
 export type TvShowFormType = z.infer<typeof tvShowSchema>
+export type WatchlistFormType = z.infer<typeof watchListSchema>

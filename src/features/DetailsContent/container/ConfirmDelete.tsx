@@ -28,7 +28,7 @@ export const ConfirmDelete = ({
           <Trash className="h-6 w-6" />
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent showCloseButton={false}>
         <DialogHeader>
           <DialogTitle>Excluir série</DialogTitle>
           <DialogDescription>
@@ -36,8 +36,10 @@ export const ConfirmDelete = ({
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="outline">Cancelar</Button>
+          <DialogClose disabled={isDeleting} asChild>
+            <Button variant="outline">
+              {isDeleting ? "Aguarde" : "Cancelar"}
+            </Button>
           </DialogClose>
           <Button
             variant="destructive"

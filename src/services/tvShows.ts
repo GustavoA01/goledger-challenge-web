@@ -72,18 +72,16 @@ export const deleteTvShowCascade = async (
 }
 
 export const deleteTvShow = async (key: string) => {
-  const payload = {
-    key: {
-      "@assetType": "tvShows",
-      title: key,
+  const response = await api.delete("/invoke/deleteAsset", {
+    data: {
+      key: {
+        "@assetType": "tvShows",
+        title: key,
+      },
     },
-  };
-  
-  const response = await api.delete("/invoke/deleteAsset", { 
-    data: payload,
-  });
-  return response;
-};
+  })
+  return response
+}
 
 export const updateTvShow = async (data: Omit<TvShowType, "@key">) => {
   const response = await api.put("/invoke/updateAsset", {

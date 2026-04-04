@@ -5,7 +5,7 @@ import { useShowUpdate } from "./useShowUpdate"
 
 export const useShowMutation = () => {
   const [onSuccess, setOnSuccess] = useState<number | null>(null)
-  const { push } = useRouter()
+  const { push,back } = useRouter()
   const { createEpisodesFn, createSeasonFn, createTvShowFn } = useShowCreate(
     setOnSuccess,
     push,
@@ -21,5 +21,6 @@ export const useShowMutation = () => {
     updateTvShowFn,
     updateSeasonFn,
     updateEpisodesFn,
+    back
   }
 }

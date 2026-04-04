@@ -8,10 +8,14 @@ import { Label } from "@/src/components/ui/label"
 import { Textarea } from "@/src/components/ui/textarea"
 import { AgeSelect } from "@/src/features/form/components/AgeSelect"
 import { useFormContext } from "react-hook-form"
-import { FormLabelInput } from "./FormLabelInput"
+import { FormLabelInput } from "../../../components/FormLabelInput"
 import { TvShowFormType } from "@/src/data/schemas"
 
-export const DetailsSection = ({disableTitle}: { disableTitle?: boolean }) => {
+export const DetailsSection = ({
+  disableTitle,
+}: {
+  disableTitle?: boolean
+}) => {
   const {
     register,
     formState: { errors },

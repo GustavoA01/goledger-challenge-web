@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from "@/src/components/ui/card"
 import { EpisodeSection } from "./EpisodeSection"
-import { FormLabelInput } from "./FormLabelInput"
+import { FormLabelInput } from "../../../components/FormLabelInput"
 import { Button } from "@/src/components/ui/button"
 import { useFormContext } from "react-hook-form"
 import { TvShowFormType } from "@/src/data/schemas"

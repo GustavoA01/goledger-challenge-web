@@ -11,11 +11,11 @@ export const ListsTab = ({ lists }: { lists: APIWatchlistResponseType[] }) => (
         <CardHeader>
           <CardTitle>{list.title}</CardTitle>
           <CardDescription>
-            {list.tvShows.length === 1
+            {list.tvShows?.length === 1
               ? "1 série adicionada"
-              : list.tvShows.length === 0
+              : list.tvShows?.length === 0 || list.tvShows == undefined
                 ? "Nenhuma série adicionada"
-                : `${list.tvShows.length} séries adicionadas`}
+                : `${list.tvShows?.length} séries adicionadas`}
           </CardDescription>
         </CardHeader>
       </Card>

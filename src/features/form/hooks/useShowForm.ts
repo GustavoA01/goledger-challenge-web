@@ -36,6 +36,7 @@ export const useShowForm = (titleKey: string | undefined) => {
     updateSeasonFn,
     updateEpisodesFn,
     updateTvShowFn,
+    back
   } = useShowMutation()
 
   useEffect(() => {
@@ -145,5 +146,6 @@ export const useShowForm = (titleKey: string | undefined) => {
     seasons,
     onSuccess,
     handleSaveShow,
+    back
   }
 }

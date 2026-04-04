@@ -1,6 +1,5 @@
+import { SavingProgress } from "@/src/components/SavingProgress"
 import { Button } from "@/src/components/ui/button"
-import { Progress } from "@/src/components/ui/progress"
-import Link from "next/link"
 
 const onSuccessMessages = [
   "Salvando série...",
@@ -18,26 +17,21 @@ const progressValues: Record<number, number> = {
 
 type FormFooterProps = {
   onSuccess: number | null
+  goBack: () => void
 }
 
-export const FormFooter = ({ onSuccess }: FormFooterProps) => (
+export const FormFooter = ({ onSuccess, goBack }: FormFooterProps) => (
   <div className="flex justify-between gap-4">
-    <div>
-      {onSuccess !== null && (
-        <div className="ml-2 space-y-1">
-          <p className="text-muted-foreground animate-pulse text-sm">
-            {onSuccessMessages[onSuccess]}
-          </p>
-          <Progress value={progressValues[onSuccess]} className="w-48" />
-        </div>
-      )}
-    </div>
-    <div className="space-x-2">
-      <Link href="/">
-        <Button variant="outline" type="button">
-          Cancelar
-        </Button>
-      </Link>
+    {onSuccess !== null && (
+      <SavingProgress
+        message={onSuccessMessages[onSuccess]}
+        value={progressValues[onSuccess]}
+      />
+    )}
+    <div className="space-x-2 ml-auto">
+      <Button variant="outline" type="button" onClick={goBack}>
+        Cancelar
+      </Button>
       <Button>Salvar</Button>
     </div>
   </div>

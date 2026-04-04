@@ -33,7 +33,6 @@ const DetailsPage = async ({
         }
       }),
     ) || []
-    console.log(tvShow)
 
   const rating =
     episodes.length > 0 ? (totalRating / episodes.length).toFixed(1).replace(".", ",") : null
