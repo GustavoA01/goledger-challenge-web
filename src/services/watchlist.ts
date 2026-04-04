@@ -29,3 +29,13 @@ export const getAllWatchlist = async () => {
   )
   return response
 }
+
+export const getWatchlistByKey = async (key: string) => {
+  const response = await api.post<APIWatchlistResponseType>("/query/readAsset", {
+    key: {
+      "@assetType": "watchlist",
+      title: key,
+    },
+  })
+  return response.data
+}

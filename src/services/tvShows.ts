@@ -39,7 +39,7 @@ export const deleteTvShowCascade = async (
 ) => {
   const seasonsResponse = await services.seasons.getAllSeasons()
   if (seasonsResponse === undefined) {
-    console.error("Erro ao buscar temporadas para exclusão em cascata.")
+    console.error("Erro ao buscar temporadas para exclusão")
     return
   }
   const seasons = seasonsResponse.data.result.filter(

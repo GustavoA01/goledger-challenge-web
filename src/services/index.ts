@@ -19,7 +19,7 @@ import {
   getTvShowByKey,
   updateTvShow,
 } from "./tvShows"
-import { createWatchlist, getAllWatchlist } from "./watchlist"
+import { createWatchlist, getAllWatchlist, getWatchlistByKey } from "./watchlist"
 
 export const services = {
   tvShows: {
@@ -46,5 +46,6 @@ export const services = {
   watchlist: {
     createWatchlist,
     getAllWatchlist,
+    getWatchlistByKey
   },
 }
