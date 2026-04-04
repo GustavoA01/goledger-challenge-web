@@ -11,7 +11,7 @@ export const MainInfo = ({ episodeTitle, date, rating }: MainInfoProps) => (
     <p className="text-lg">{episodeTitle}</p>
 
     <div className="flex items-center gap-2">
-      {rating && (
+      {rating !== undefined && (
         <div className="flex items-center gap-1">
           <StarIcon className="text-primary fill-primary h-4 w-4" />
           <p>{rating}</p>

@@ -30,8 +30,8 @@ export const AddToListButton = ({ listTitle }: { listTitle?: string }) => {
       )}
       <DialogContent>
         <FormHeader />
-        <ListForm setOnSuccess={setOnSuccess} setOpenDialog={setOpenModal} />
-        <ListFormFooter onSuccess={onSuccess} />
+        <ListForm listTitle={listTitle} setOnSuccess={setOnSuccess} setOpenDialog={setOpenModal} />
+        <ListFormFooter listTitle={!!listTitle} onSuccess={onSuccess} />
       </DialogContent>
     </Dialog>
   )

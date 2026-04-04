@@ -39,3 +39,13 @@ export const getWatchlistByKey = async (key: string) => {
   })
   return response.data
 }
+
+export const updateWatchlist = async (data: Omit<WatchlistType, "@key">) => {
+  const response = await api.put("/invoke/updateAsset", {
+    update: {
+      "@assetType": "watchlist",
+      ...data,
+    },
+  })
+  return response
+}

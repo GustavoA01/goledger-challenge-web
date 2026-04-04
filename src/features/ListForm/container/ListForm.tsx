@@ -5,12 +5,14 @@ import { useListForm } from "../hooks/useListForm"
 type ListFormProps = {
   setOpenDialog: (open: boolean) => void
   setOnSuccess: (id: number | null) => void
+  listTitle?: string
 }
 
-export const ListForm = ({ setOpenDialog, setOnSuccess }: ListFormProps) => {
+export const ListForm = ({ setOpenDialog, setOnSuccess, listTitle }: ListFormProps) => {
   const { handleCreateWatchList, methods } = useListForm({
     setOnSuccess,
     setOpenDialog,
+    listTitle,
   })
   const {
     register,
@@ -30,6 +32,7 @@ export const ListForm = ({ setOpenDialog, setOnSuccess }: ListFormProps) => {
         register={register}
         label="Título"
         placeholder="Ex: Favoritos"
+        disabled={!!listTitle}
       />
       <FormLabelInput<WatchlistFormType>
         error={errors.description}

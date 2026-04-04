@@ -29,14 +29,14 @@ export const ListHeader = ({ listTitle, tvShows }: ListHeaderProps) => {
               <p>Adicionar série</p>
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="h-70 overflow-hidden">
             <DialogHeader>
               <DialogTitle>Adicionar Série</DialogTitle>
               <DialogDescription>
                 Selecione uma série para adicionar à lista
               </DialogDescription>
             </DialogHeader>
-            <div className="space-y-2">
+            <div className="space-y-2 overflow-y-auto min-h-0">
               {tvShows.map((tvShow) => (
                 <div
                   key={tvShow["@key"]}

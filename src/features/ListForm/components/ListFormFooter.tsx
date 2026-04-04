@@ -4,7 +4,7 @@ import { DialogClose, DialogFooter } from "@/src/components/ui/dialog"
 
 const savingValue: Record<number, { message: string; value: number }> = {
   0: {
-    message: "Criando lista...",
+    message: "Salvando lista...",
     value: 0,
   },
   1: {
@@ -13,7 +13,12 @@ const savingValue: Record<number, { message: string; value: number }> = {
   },
 }
 
-export const ListFormFooter = ({ onSuccess }: { onSuccess: number | null }) => (
+type ListFormFooterProps = {
+  onSuccess: number | null
+  listTitle?: boolean
+}
+
+export const ListFormFooter = ({ onSuccess, listTitle }: ListFormFooterProps) => (
   <DialogFooter>
     <div className="mr-auto">
       {onSuccess !== null && (
@@ -24,11 +29,11 @@ export const ListFormFooter = ({ onSuccess }: { onSuccess: number | null }) => (
       )}
     </div>
     <div className="space-x-2">
-      <DialogClose asChild>
+      <DialogClose asChild disabled={onSuccess !== null}>
         <Button variant="outline">Cancelar</Button>
       </DialogClose>
       <Button disabled={onSuccess !== null} type="submit" form="watchlist-form">
-        Criar
+        {listTitle ? "Atualizar" : "Criar"}
       </Button>
     </div>
   </DialogFooter>

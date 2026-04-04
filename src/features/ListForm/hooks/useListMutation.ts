@@ -40,7 +40,32 @@ export const useListMutation = ({
     },
   })
 
+  const { mutateAsync: updateListFn } = useMutation({
+    mutationFn: async (data: Omit<WatchlistType, "@key">) => {
+      setOnSuccess(0)
+      return await services.watchlist.updateWatchlist(data)
+    },
+    onSuccess: () => {
+      setOnSuccess(1)
+      toast.success("Lista atualizada com sucesso")
+      setOpenDialog(false)
+      refresh()
+    },
+    onError: (error: AxiosError) => {
+      setOnSuccess(null)
+      if (error.response?.status === 409) {
+        toast.error(
+          "Você já tem uma lista com esse título, escolha outro nome.",
+        )
+      } else {
+        console.error("Erro ao atualizar lista", error)
+        toast.error("Ocorreu um erro ao atualizar lista")
+      }
+    },
+  })
+
   return {
     createListFn,
+    updateListFn,
   }
 }

@@ -1,12 +1,8 @@
-import { GoBackButton } from "@/src/components/GoBackButton"
-import { Button } from "@/src/components/ui/button"
-import { Dialog } from "@/src/components/ui/dialog"
+import { APITvShowsResponseType } from "@/src/data/types"
 import { ListHeader } from "@/src/features/ListDetails/components/ListHeader"
 import { ListInfo } from "@/src/features/ListDetails/components/ListInfo"
 import { TvShowCard } from "@/src/features/ListDetails/components/TvShowCard"
 import { services } from "@/src/services"
-import { Edit, Plus } from "lucide-react"
-import Link from "next/link"
 
 const WatchListDetailsPage = async ({
   params,
@@ -19,26 +15,32 @@ const WatchListDetailsPage = async ({
 
   const tvShowsKeys = watchList.tvShows?.map((tvShow) => tvShow["@key"]) || []
   const tvShowsResponse = await services.tvShows.getAllTvShows()
-  const tvShows =
-    tvShowsResponse?.result.filter((tvShow) =>
-      tvShowsKeys.includes(tvShow["@key"]),
-    ) || []
+  const tvShowsAdded:APITvShowsResponseType[] = []
+  const tvShowsNotAdded:APITvShowsResponseType[] = []
+
+  tvShowsResponse?.result.forEach((show) => {
+    if (tvShowsKeys.includes(show["@key"])) {
+      tvShowsAdded.push(show)
+    } else {
+      tvShowsNotAdded.push(show)
+    }
+  })
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       <div className="bg-linear-to-r from-primary/30 to-background pt-8 pb-16">
         <div className="container mx-auto px-4">
-          <ListHeader listTitle={watchList.title} tvShows={tvShows} />
+          <ListHeader listTitle={watchList.title} tvShows={tvShowsNotAdded} />
           <ListInfo
             listTitle={watchList.title}
             listDescription={watchList.description}
-            tvShows={tvShows}
+            tvShows={tvShowsAdded}
           />
         </div>
       </div>
       <main className="container mx-auto px-4 pt-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {tvShows.map((tvShow) => (
+          {tvShowsAdded.map((tvShow) => (
             <TvShowCard
               key={tvShow["@key"]}
               tvShowTitle={tvShow.title}
