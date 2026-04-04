@@ -4,7 +4,7 @@ import { APIEpisodeResponseType, APISeasonResponseType } from "../data/types"
 import { services } from "../services"
 import { ShowsTab } from "../components/ShowsTab"
 import { FloatingAddButton } from "../components/FloatingAddButton"
-import { AddToListButton } from "../components/AddListButton"
+import { AddToListButton } from "../features/ListForm/container/AddListButton"
 import { ListsTab } from "../components/ListsTab"
 
 const Home = async () => {
@@ -43,9 +43,9 @@ const Home = async () => {
       <Header />
       <main className="container mx-auto p-4 mt-24">
         <Tabs defaultValue="all">
-          <TabsList>
-            <TabsTrigger value="all">Todas</TabsTrigger>
-            <TabsTrigger value="favorites">Lista de séries</TabsTrigger>
+          <TabsList className="max-sm:w-full">
+            <TabsTrigger value="all">Séries</TabsTrigger>
+            <TabsTrigger value="favorites">Listas</TabsTrigger>
           </TabsList>
           <TabsContent value="all">
             <div className="flex-col max-sm:space-y-4 sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -54,11 +54,10 @@ const Home = async () => {
             <FloatingAddButton url="/nova-serie" />
           </TabsContent>
           <TabsContent value="favorites">
-            <div className="flex-col max-sm:space-y-4 sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <AddToListButton/>
-              <ListsTab lists={watchLists.data.result}/>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <AddToListButton />
+              <ListsTab lists={watchLists.data.result} />
             </div>
-            <FloatingAddButton url="/nova-lista" />
           </TabsContent>
         </Tabs>
       </main>
