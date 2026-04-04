@@ -1,6 +1,7 @@
 import { createEpisodes, getAllEpisodes, updateEpisode } from "./episodes"
 import { createSeasons, getAllSeasons, updateSeason } from "./seasons"
 import { createTvShow, deleteTvShow, getAllTvShows, getTvShowByKey, updateTvShow } from "./tvShows"
+import { getAllWatchlist } from "./watchlist"
 
 export const services = {
   tvShows: {
@@ -20,4 +21,7 @@ export const services = {
     getAllEpisodes,
     updateEpisode
   },
+  watchlist: {
+    getAllWatchlist
+  }
 }

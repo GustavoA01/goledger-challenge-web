@@ -15,11 +15,11 @@ export const Header = () => {
           <Search />
           <p className="hidden sm:block">Buscar</p>
         </Button>
-        <Link href="/nova-serie">
-        <Button>
-          <Plus />
-          <p className="hidden sm:block">Adicionar</p>
-        </Button>
+        <Link href="/nova-serie" className="hidden sm:block">
+          <Button>
+            <Plus />
+            <p className="hidden sm:block">Adicionar série</p>
+          </Button>
         </Link>
       </div>
     </header>

@@ -1,6 +1,4 @@
 import { CardAction, CardHeader, CardTitle } from "@/src/components/ui/card"
-import { Bookmark } from "lucide-react"
-import { Button } from "@/src/components/ui/button"
 
 type CardShowHeaderProps = {
   title: string
@@ -20,20 +18,12 @@ const borderColor: Record<number, string> = {
 export const CardShowHeader = ({
   title,
   recommendedAge,
-  handleAddToFavorites,
 }: CardShowHeaderProps) => (
   <CardHeader className="w-full">
     <CardTitle className="line-clamp-1 group-hover:text-primary transition-all duration-200">
       {title}
     </CardTitle>
     <CardAction className="space-x-2 items-center">
-      <Button
-        className="group/bookmark"
-        onClick={handleAddToFavorites}
-        variant="ghost"
-      >
-        <Bookmark className="group-hover/bookmark:text-primary transition-all duration-200 h-6 w-6" />
-      </Button>
       <span
         className={`border p-1 font-font-semibold rounded-md ${borderColor[recommendedAge] || "border-gray-800"}`}
       >

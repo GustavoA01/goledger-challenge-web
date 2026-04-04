@@ -35,7 +35,7 @@ const DetailsPage = async ({
     ) || []
 
   const rating =
-    episodes.length > 0 ? (totalRating / episodes.length).toFixed(1) : null
+    episodes.length > 0 ? (totalRating / episodes.length).toFixed(1).replace(".", ",") : null
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">

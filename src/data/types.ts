@@ -57,3 +57,23 @@ export type EpisodeType = Pick<
   APIEpisodeResponseType,
   "@key" | "title" | "episodeNumber" | "description" | "rating" | "releaseDate" | "season"
 >
+
+export interface APIWatchlistResponseType {
+  "@assetType": "watchlist";
+  "@key": string;
+  "@lastTouchBy": string;
+  "@lastTx": string;
+  "@lastTxID": string;
+  "@lastUpdated": string;
+  title: string;
+  description: string;
+  tvShows: {
+    "@assetType": "tvShows";
+    "@key": string;
+  }[];
+}
+
+export type WatchlistType = Pick<
+  APIWatchlistResponseType,
+  "@key" | "title" | "description" | "tvShows"
+>
