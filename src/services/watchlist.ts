@@ -49,3 +49,15 @@ export const updateWatchlist = async (data: Omit<WatchlistType, "@key">) => {
   })
   return response
 }
+
+export const deleteWatchlist = async (key: string) => {
+  const response = await api.delete("/invoke/deleteAsset", {
+    data: {
+      key: {
+        "@assetType": "watchlist",
+        title: key,
+      },
+    },
+  })
+  return response
+}

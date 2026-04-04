@@ -1,7 +1,7 @@
 import { APITvShowsResponseType } from "@/src/data/types"
 import { ListHeader } from "@/src/features/ListDetails/components/ListHeader"
 import { ListInfo } from "@/src/features/ListDetails/components/ListInfo"
-import { TvShowCard } from "@/src/features/ListDetails/components/TvShowCard"
+import { ListDetailsContent } from "@/src/features/ListDetails/container/ListDetailsContent"
 import { services } from "@/src/services"
 
 const WatchListDetailsPage = async ({
@@ -15,8 +15,8 @@ const WatchListDetailsPage = async ({
 
   const tvShowsKeys = watchList.tvShows?.map((tvShow) => tvShow["@key"]) || []
   const tvShowsResponse = await services.tvShows.getAllTvShows()
-  const tvShowsAdded:APITvShowsResponseType[] = []
-  const tvShowsNotAdded:APITvShowsResponseType[] = []
+  const tvShowsAdded: APITvShowsResponseType[] = []
+  const tvShowsNotAdded: APITvShowsResponseType[] = []
 
   tvShowsResponse?.result.forEach((show) => {
     if (tvShowsKeys.includes(show["@key"])) {
@@ -38,17 +38,11 @@ const WatchListDetailsPage = async ({
           />
         </div>
       </div>
-      <main className="container mx-auto px-4 pt-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {tvShowsAdded.map((tvShow) => (
-            <TvShowCard
-              key={tvShow["@key"]}
-              tvShowTitle={tvShow.title}
-              tvShowDescription={tvShow.description}
-            />
-          ))}
-        </div>
-      </main>
+      <ListDetailsContent
+        titleKey={watchList.title}
+        tvShowsAdded={tvShowsAdded}
+        tvShowsKeys={tvShowsKeys}
+      />
     </div>
   )
 }

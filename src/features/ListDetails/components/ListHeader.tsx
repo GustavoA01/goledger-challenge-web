@@ -3,14 +3,12 @@ import { GoBackButton } from "@/src/components/GoBackButton"
 import { Button } from "@/src/components/ui/button"
 import {
   Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/src/components/ui/dialog"
 import { APITvShowsResponseType } from "@/src/data/types"
 import { Plus } from "lucide-react"
+import { ConfirmDelete } from "../container/ConfirmDelete"
+import { TvShowList } from "./TvShowList"
 
 type ListHeaderProps = {
   listTitle: string
@@ -29,29 +27,12 @@ export const ListHeader = ({ listTitle, tvShows }: ListHeaderProps) => {
               <p>Adicionar série</p>
             </Button>
           </DialogTrigger>
-          <DialogContent className="h-70 overflow-hidden">
-            <DialogHeader>
-              <DialogTitle>Adicionar Série</DialogTitle>
-              <DialogDescription>
-                Selecione uma série para adicionar à lista
-              </DialogDescription>
-            </DialogHeader>
-            <div className="space-y-2 overflow-y-auto min-h-0">
-              {tvShows.map((tvShow) => (
-                <div
-                  key={tvShow["@key"]}
-                  className="p-2 bg-primary/10 rounded-lg cursor-pointer hover:bg-primary/20 transition-all duration-200"
-                >
-                  <h2>{tvShow.title}</h2>
-                </div>
-              ))}
-            </div>
-          </DialogContent>
+          <TvShowList tvShows={tvShows} />
         </Dialog>
 
         <AddToListButton listTitle={listTitle} />
         <Dialog>
-          {/* <ConfirmDelete tvShowTitle={tvShowTitle} tvShowKey={tvShowKey} /> */}
+          <ConfirmDelete watchListTitle={listTitle} />
         </Dialog>
       </div>
     </header>
