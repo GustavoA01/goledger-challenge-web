@@ -6,46 +6,51 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
 
-export const useDeleteWatchlist = () => {
-  const { push } = useRouter()
-    const [openRemoveDialog, setOpenRemoveDialog] = useState(false)
-  
-  const { mutateAsync: deleteWatchlistFn, isPending: isDeleting } = useMutation(
-    {
-      mutationFn: (watchListTitle: string) =>
-        services.watchlist.deleteWatchlist(watchListTitle),
-      onSuccess: () => {
-        toast.success("Série excluída com sucesso")
-        push("/")
-      },
-      onError: (error: AxiosError) => {
-        console.error(error)
-        toast.error("Ocorreu um erro ao excluir série")
-      },
-    },
-  )
+export const useDeleteList = (isAdding?: boolean) => {
+  const { push, refresh } = useRouter()
+  const [updateDialog, setUpdateDialog] = useState(false)
 
-  const { mutateAsync: removeShowFn, isPending:isRemovingShow } = useMutation({
+  const { mutateAsync: deleteList, isPending: isDeleting } = useMutation({
+    mutationFn: (watchListTitle: string) =>
+      services.watchlist.deleteWatchlist(watchListTitle),
+    onSuccess: () => {
+      toast.success("Série excluída com sucesso")
+      push("/")
+    },
+    onError: (error: AxiosError) => {
+      console.error(error)
+      toast.error("Ocorreu um erro ao excluir série")
+    },
+  })
+
+  const { mutateAsync: updateShowsFn, isPending: isUpdating } = useMutation({
     mutationFn: async (data: Omit<WatchlistType, "@key">) => {
       return await services.watchlist.updateWatchlist(data)
     },
     onSuccess: () => {
-      setOpenRemoveDialog(false)
-      toast.success("Série removida")
+      if (isAdding) toast.success("Série adicionada")
+      else toast.success("Série removida")
+      setUpdateDialog(false)
+      refresh()
     },
     onError: (error: AxiosError) => {
-      setOpenRemoveDialog(false)
-      console.error("Erro ao remover série", error)
-      toast.error("Ocorreu um erro ao remover série")
+      if (isAdding) {
+        console.error("Erro ao adicionar série", error)
+        toast.error("Ocorreu um erro ao adicionar série")
+      } else {
+        toast.error("Ocorreu um erro ao remover série")
+        console.error("Erro ao remover série", error)
+      }
     },
   })
 
   return {
-    deleteWatchlistFn,
+    deleteList,
     isDeleting,
-    removeShowFn,
-    openRemoveDialog,
-    setOpenRemoveDialog,
-    isRemovingShow
+    updateShowsFn,
+    updateDialog,
+    setUpdateDialog,
+    isUpdating,
+    push
   }
 }

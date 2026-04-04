@@ -30,7 +30,7 @@ const WatchListDetailsPage = async ({
     <div className="min-h-screen bg-background overflow-x-hidden">
       <div className="bg-linear-to-r from-primary/30 to-background pt-8 pb-16">
         <div className="container mx-auto px-4">
-          <ListHeader listTitle={watchList.title} tvShows={tvShowsNotAdded} />
+          <ListHeader listTitle={watchList.title} tvShowsNotAdded={tvShowsNotAdded} previousTvShows={tvShowsAdded} />
           <ListInfo
             listTitle={watchList.title}
             listDescription={watchList.description}

@@ -1,4 +1,5 @@
 import { APITvShowsResponseType } from "@/src/data/types"
+import { Dot } from "lucide-react"
 
 type ListHeaderProps = {
   listTitle: string
@@ -16,10 +17,14 @@ export const ListInfo = ({
     <p className="text-muted-foreground sm:text-lg leading-relaxed">
       {listDescription || "Sem descrição para esta lista."}
     </p>
-    <p className="text-muted-foreground sm:text-lg leading-relaxed">
-      {!tvShows.length
-        ? "Essa lista não possui séries adicionadas."
-        : `${tvShows.length === 1 ? "1 série" : `${tvShows.length} séries`}`}
-    </p>
+    <div className="flex items-center ">
+      <Dot className="text-primary" />
+
+      <p className="text-muted-foreground sm:text-lg leading-relaxed">
+        {!tvShows.length
+          ? "Essa lista não possui séries adicionadas."
+          : `${tvShows.length === 1 ? "1 série" : `${tvShows.length} séries`}`}
+      </p>
+    </div>
   </div>
 )

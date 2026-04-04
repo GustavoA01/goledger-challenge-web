@@ -10,14 +10,14 @@ import {
   DialogTrigger,
 } from "@/src/components/ui/dialog"
 import { Trash } from "lucide-react"
-import { useDeleteWatchlist } from "../hooks/useDeleteWatchlist"
+import { useDeleteList } from "../hooks/useDeleteWatchlist"
 
 export const ConfirmDelete = ({
   watchListTitle,
 }: {
   watchListTitle: string
 }) => {
-  const { deleteWatchlistFn, isDeleting } = useDeleteWatchlist()
+  const { deleteList, isDeleting } = useDeleteList()
   return (
     <>
       <DialogTrigger asChild>
@@ -41,7 +41,7 @@ export const ConfirmDelete = ({
           <Button
             variant="destructive"
             disabled={isDeleting}
-            onClick={() => deleteWatchlistFn(watchListTitle)}
+            onClick={() => deleteList(watchListTitle)}
           >
             <p className={`${isDeleting ? "animate-pulse" : ""}`}>
               {isDeleting ? "Excluindo..." : "Excluir"}

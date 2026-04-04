@@ -1,11 +1,9 @@
 "use client"
-import { APITvShowsResponseType, WatchlistType } from "@/src/data/types"
+import { APITvShowsResponseType } from "@/src/data/types"
 import { TvShowCard } from "../components/TvShowCard"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
 import { Dialog } from "@/src/components/ui/dialog"
 import { RemoveShowModal } from "./RemoveShowModal"
-import { useDeleteWatchlist } from "../hooks/useDeleteWatchlist"
+import { useAddShow } from "../hooks/useAddShow"
 
 type ListDetailsContentProps = {
   titleKey: string
@@ -18,29 +16,14 @@ export const ListDetailsContent = ({
   tvShowsAdded,
   tvShowsKeys,
 }: ListDetailsContentProps) => {
-  const { push } = useRouter()
-  const { removeShowFn, setOpenRemoveDialog, openRemoveDialog,isRemovingShow } =
-    useDeleteWatchlist()
-
-  const [tvShowsFiltered, setTvShowsFiltered] = useState<string[]>(tvShowsKeys)
-
-  const handleOpenDialog = (key: string) => {
-    setOpenRemoveDialog(true)
-    const tvShowsFiltered = tvShowsKeys.filter((showKey) => showKey !== key)
-    setTvShowsFiltered(tvShowsFiltered)
-  }
-
-  const handleRemoveShow = async () => {
-    const data = {
-      title: titleKey,
-      tvShows: tvShowsFiltered.map((key) => ({
-        "@assetType": "tvShows",
-        "@key": key,
-      })),
-    }
-
-    await removeShowFn(data as Omit<WatchlistType, "@key">)
-  }
+  const {
+    handleOpenDialog,
+    handleRemoveShow,
+    isUpdating,
+    push,
+    setUpdateDialog,
+    updateDialog,
+  } = useAddShow(titleKey, tvShowsKeys)
 
   return (
     <main className="container mx-auto px-4 pt-8">
@@ -57,8 +40,11 @@ export const ListDetailsContent = ({
           />
         ))}
       </div>
-      <Dialog open={openRemoveDialog} onOpenChange={setOpenRemoveDialog}>
-        <RemoveShowModal handleRemoveShow={handleRemoveShow} isRemovingShow={isRemovingShow} />
+      <Dialog open={updateDialog} onOpenChange={setUpdateDialog}>
+        <RemoveShowModal
+          handleRemoveShow={handleRemoveShow}
+          isRemovingShow={isUpdating}
+        />
       </Dialog>
     </main>
   )
