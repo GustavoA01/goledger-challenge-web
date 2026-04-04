@@ -25,7 +25,6 @@ export const TvShowList = ({
         Selecione uma série para adicionar à lista
       </DialogDescription>
     </DialogHeader>
-    
     {isUpdating ? (
       <div className="flex justify-center">
         <Spinner className="text-primary" />

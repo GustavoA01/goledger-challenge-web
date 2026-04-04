@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useDeleteList } from "./useDeleteWatchlist"
 import { WatchlistType } from "@/src/data/types"
 
-export const useAddShow = (titleKey: string, tvShowsKeys: string[]) => {
+export const useRemoveAddShow = (titleKey: string, tvShowsKeys: string[]) => {
   const { updateShowsFn, setUpdateDialog, updateDialog, isUpdating, push } =
     useDeleteList()
 

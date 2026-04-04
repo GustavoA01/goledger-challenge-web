@@ -7,12 +7,14 @@ import { FloatingAddButton } from "../components/FloatingAddButton"
 import { AddToListButton } from "../features/ListForm/container/AddListButton"
 import { ListsTab } from "../components/ListsTab"
 
-const Home = async () => {
+const Home = async ({searchParams}:{searchParams: Promise<{ query?: string }>}) => {
+  const query = (await searchParams).query || ""
+  console.log("QUERY: " + query)
   const tvShowsResponse = await services.tvShows.getAllTvShows()
   const episodesResponse = await services.episodes.getAllEpisodes()
   const seasonsResponse = await services.seasons.getAllSeasons()
   const watchLists = await services.watchlist.getAllWatchlist()
-  const tvShows = []
+  let tvShows = []
 
   for (const tvShow of tvShowsResponse.result) {
     const seasonsOfShow = seasonsResponse?.data.result.filter(
@@ -38,9 +40,13 @@ const Home = async () => {
     tvShows.push(show)
   }
 
+  tvShows = query !== "" ? tvShows.filter((show) =>
+    show.title.toLowerCase().includes(query.toLowerCase()),
+  ) : tvShows
+
   return (
     <div>
-      <Header />
+      <Header/>
       <main className="container mx-auto p-4 mt-24">
         <Tabs defaultValue="all">
           <TabsList className="max-sm:w-full">
@@ -49,6 +55,7 @@ const Home = async () => {
           </TabsList>
           <TabsContent value="all">
             <div className="flex-col max-sm:space-y-4 sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
               <ShowsTab tvShows={tvShows} />
             </div>
             <FloatingAddButton url="/nova-serie" />

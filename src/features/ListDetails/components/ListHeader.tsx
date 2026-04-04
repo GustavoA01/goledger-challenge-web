@@ -50,9 +50,7 @@ export const ListHeader = ({
             handleAddTvShow={handleAddTvShow}
             isUpdating={isUpdating}
           />
-          
         </Dialog>
-
         <AddToListButton listTitle={listTitle} />
         <Dialog>
           <ConfirmDelete watchListTitle={listTitle} />

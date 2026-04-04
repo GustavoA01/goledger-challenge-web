@@ -3,7 +3,7 @@ import { APITvShowsResponseType } from "@/src/data/types"
 import { TvShowCard } from "../components/TvShowCard"
 import { Dialog } from "@/src/components/ui/dialog"
 import { RemoveShowModal } from "./RemoveShowModal"
-import { useAddShow } from "../hooks/useAddShow"
+import { useRemoveAddShow } from "../hooks/useAddShow"
 
 type ListDetailsContentProps = {
   titleKey: string
@@ -23,7 +23,7 @@ export const ListDetailsContent = ({
     push,
     setUpdateDialog,
     updateDialog,
-  } = useAddShow(titleKey, tvShowsKeys)
+  } = useRemoveAddShow(titleKey, tvShowsKeys)
 
   return (
     <main className="container mx-auto px-4 pt-8">
