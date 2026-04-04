@@ -14,12 +14,12 @@ export const useDeleteList = (isAdding?: boolean) => {
     mutationFn: (watchListTitle: string) =>
       services.watchlist.deleteWatchlist(watchListTitle),
     onSuccess: () => {
-      toast.success("Série excluída com sucesso")
+      toast.success("Lista excluída com sucesso")
       push("/")
     },
     onError: (error: AxiosError) => {
       console.error(error)
-      toast.error("Ocorreu um erro ao excluir série")
+      toast.error("Ocorreu um erro ao excluir lista")
     },
   })
 
@@ -51,6 +51,6 @@ export const useDeleteList = (isAdding?: boolean) => {
     updateDialog,
     setUpdateDialog,
     isUpdating,
-    push
+    push,
   }
 }

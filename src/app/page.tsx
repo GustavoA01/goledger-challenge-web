@@ -9,7 +9,6 @@ import { ListsTab } from "../components/ListsTab"
 
 const Home = async ({searchParams}:{searchParams: Promise<{ query?: string }>}) => {
   const query = (await searchParams).query || ""
-  console.log("QUERY: " + query)
   const tvShowsResponse = await services.tvShows.getAllTvShows()
   const episodesResponse = await services.episodes.getAllEpisodes()
   const seasonsResponse = await services.seasons.getAllSeasons()
@@ -46,7 +45,7 @@ const Home = async ({searchParams}:{searchParams: Promise<{ query?: string }>}) 
 
   return (
     <div>
-      <Header/>
+      <Header />
       <main className="container mx-auto p-4 mt-24">
         <Tabs defaultValue="all">
           <TabsList className="max-sm:w-full">
