@@ -1,6 +1,6 @@
-import { createEpisodes, getAllEpisodes, updateEpisode } from "./episodes"
-import { createSeasons, getAllSeasons, updateSeason } from "./seasons"
-import { createTvShow, deleteTvShow, getAllTvShows, getTvShowByKey, updateTvShow } from "./tvShows"
+import { createEpisodes, deleteEpisode, getAllEpisodes, getEpisodeByKey, updateEpisode } from "./episodes"
+import { createSeasons, deleteSeason, getAllSeasons, getSeasonByKey, updateSeason } from "./seasons"
+import { createTvShow, deleteTvShowCascade, getAllTvShows, getTvShowByKey, updateTvShow } from "./tvShows"
 import { getAllWatchlist } from "./watchlist"
 
 export const services = {
@@ -8,18 +8,22 @@ export const services = {
     createTvShow,
     getAllTvShows,
     getTvShowByKey,
-    deleteTvShow,
+    deleteTvShowCascade,
     updateTvShow
   },
   seasons: {
     createSeasons,
     getAllSeasons,
-    updateSeason
+    getSeasonByKey,
+    updateSeason,
+    deleteSeason
   },
   episodes: {
     createEpisodes,
     getAllEpisodes,
-    updateEpisode
+    getEpisodeByKey,
+    updateEpisode,
+    deleteEpisode
   },
   watchlist: {
     getAllWatchlist

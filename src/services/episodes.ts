@@ -19,6 +19,20 @@ export const getAllEpisodes = async () => {
   return response
 }
 
+export const getEpisodeByKey = async (seasonKey: string, numberKey: number) => {
+  const response = await api.post<APIEpisodeResponseType>("/query/readAsset", {
+    key: {
+      "@assetType": "episodes",
+      episodeNumber: numberKey,
+      season: {
+        "@assetType": "seasons",
+        "@key": seasonKey,
+      },
+    },
+  })
+  return response.data
+}
+
 export const updateEpisode = async (data: Omit<EpisodeType, "@key">) => {
   const response = await api.put("/invoke/updateAsset", {
     update: {
@@ -28,3 +42,19 @@ export const updateEpisode = async (data: Omit<EpisodeType, "@key">) => {
   })
   return response
 }
+
+export const deleteEpisode = async (seasonKey: string, episodeNumber: number) => {
+  const response = await api.delete("/invoke/deleteAsset", {
+    data: {
+      key: {
+        "@assetType": "episodes",
+        episodeNumber: episodeNumber,
+        season: {
+          "@assetType": "seasons",
+          "@key": seasonKey,
+        },
+      },
+    },
+  });
+  return response;
+};

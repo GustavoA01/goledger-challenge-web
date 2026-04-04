@@ -6,20 +6,22 @@ import { toast } from "sonner"
 
 export const useDeleteTvShow = () => {
   const { push } = useRouter()
-  const { mutateAsync: deleteTvShow, isPending: isDeleting } = useMutation({
-    mutationFn: services.tvShows.deleteTvShow,
+  const { mutateAsync: deleteTvShowFn, isPending: isDeleting } = useMutation({
+    mutationFn: (params: { tvShowTitle: string; tvShowKey: string }) => {
+      return services.tvShows.deleteTvShowCascade(params.tvShowTitle, params.tvShowKey)
+    },
     onSuccess: () => {
       toast.success("Série excluída com sucesso")
       push("/")
     },
     onError: (error: AxiosError) => {
-      console.error(error.message)
+      console.error(error)
       toast.error("Ocorreu um erro ao excluir série")
     },
   })
   
   return {
-    deleteTvShow,
+    deleteTvShowFn,
     isDeleting,
   }
 }

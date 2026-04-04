@@ -5,7 +5,7 @@ import Link from "next/link"
 import { ConfirmDelete } from "../container/ConfirmDelete"
 import { GoBackButton } from "@/src/components/GoBackButton"
 
-export const DetailsHeader = ({ tvShowTitle }: { tvShowTitle: string }) => {
+export const DetailsHeader = ({ tvShowTitle,tvShowKey }: { tvShowTitle: string; tvShowKey: string }) => {
   return (
     <header className="flex justify-between items-center mb-8">
       <GoBackButton />
@@ -21,7 +21,7 @@ export const DetailsHeader = ({ tvShowTitle }: { tvShowTitle: string }) => {
           </Button>
         </Link>
         <Dialog>
-          <ConfirmDelete tvShowTitle={tvShowTitle} />
+          <ConfirmDelete tvShowTitle={tvShowTitle} tvShowKey={tvShowKey} />
         </Dialog>
       </div>
     </header>

@@ -12,8 +12,14 @@ import {
 import { Trash } from "lucide-react"
 import { useDeleteTvShow } from "../hooks/useDeleteTvShow"
 
-export const ConfirmDelete = ({ tvShowTitle }: { tvShowTitle: string }) => {
-  const {deleteTvShow,isDeleting} = useDeleteTvShow()
+export const ConfirmDelete = ({
+  tvShowTitle,
+  tvShowKey,
+}: {
+  tvShowTitle: string
+  tvShowKey: string
+}) => {
+  const { deleteTvShowFn, isDeleting } = useDeleteTvShow()
 
   return (
     <>
@@ -36,9 +42,11 @@ export const ConfirmDelete = ({ tvShowTitle }: { tvShowTitle: string }) => {
           <Button
             variant="destructive"
             disabled={isDeleting}
-            onClick={() => deleteTvShow(tvShowTitle)}
+            onClick={() => deleteTvShowFn({ tvShowTitle, tvShowKey })}
           >
-            {isDeleting ? "Excluindo..." : "Excluir"}
+            <p className={`${isDeleting ? "animate-pulse" : ""}`}>
+              {isDeleting ? "Excluindo..." : "Excluir"}
+            </p>
           </Button>
         </DialogFooter>
       </DialogContent>
