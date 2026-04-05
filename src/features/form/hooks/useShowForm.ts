@@ -1,7 +1,5 @@
 import { TvShowFormType, tvShowSchema } from "@/src/data/schemas"
-import {
-  TvShowType,
-} from "@/src/data/types"
+import { APISeasonResponseType, TvShowType } from "@/src/data/types"
 import { services } from "@/src/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect, useState } from "react"
@@ -19,6 +17,10 @@ export const useShowForm = (titleKey: string | undefined) => {
   const [seasons, setSeasons] = useState<Record<number, { episodes: number }>>({
     0: { episodes: 1 },
   })
+  const [previousSeasonsLength, setPreviousSeasonsLength] = useState(0)
+  const [preaviousEpisodesLength, setPreviousEpisodesLength] = useState<
+    number[]
+  >([])
 
   const {
     addSeason,
@@ -26,7 +28,7 @@ export const useShowForm = (titleKey: string | undefined) => {
     getSeasonsData,
     removeSeason,
     updateEpisodes,
-  } = useFormUtils({ seasons,setSeasons })
+  } = useFormUtils({ seasons, setSeasons })
 
   const {
     createEpisodesFn,
@@ -36,7 +38,7 @@ export const useShowForm = (titleKey: string | undefined) => {
     updateSeasonFn,
     updateEpisodesFn,
     updateTvShowFn,
-    back
+    back,
   } = useShowMutation()
 
   useEffect(() => {
@@ -58,7 +60,15 @@ export const useShowForm = (titleKey: string | undefined) => {
           seasons.some((season) => episode.season["@key"] === season["@key"]),
         )
 
-        if (seasonsResponse === undefined) return
+        const previousEpisodesCount = seasons.map(
+          (season) =>
+            episodes.filter(
+              (episode) => episode.season["@key"] === season["@key"],
+            ).length || 0,
+        )
+
+        setPreviousSeasonsLength(seasons.length)
+        setPreviousEpisodesLength(previousEpisodesCount)
 
         const seasonsData = seasons.map((season, i) => ({
           number: i,
@@ -115,26 +125,32 @@ export const useShowForm = (titleKey: string | undefined) => {
       data.seasons,
       titleKey,
       tvShowPreviousKey,
+      previousSeasonsLength,
     )
 
-    let seasonsResponse
-    if (titleKey) {
-      seasonsResponse = await updateSeasonFn(seasonsToCreate)
-    } else {
-      seasonsResponse = await createSeasonFn(seasonsToCreate)
-    }
-
-    if (!seasonsResponse || !seasonsResponse) {
-      console.error("Erro: seasonsResponse está undefined")
-      return
-    }
-
-    const episodesToCreate = getEpisodesData(seasonsResponse, data.seasons)
+    let seasonsResponse: APISeasonResponseType[] = []
 
     if (titleKey) {
-      await updateEpisodesFn(episodesToCreate)
-    } else {
-      await createEpisodesFn(episodesToCreate)
+      seasonsResponse = await updateSeasonFn(seasonsToCreate.seasonsToUpdate)
+    }
+
+    if (seasonsToCreate.seasonsToCreate.length > 0) {
+      const newSeasons = await createSeasonFn(seasonsToCreate.seasonsToCreate)
+      seasonsResponse = [...seasonsResponse, ...(newSeasons ?? [])]
+    }
+
+    const episodesToCreate = getEpisodesData(
+      seasonsResponse,
+      data.seasons,
+      preaviousEpisodesLength,
+    )
+
+    if (titleKey) {
+      await updateEpisodesFn(episodesToCreate.episodesToUpdate)
+    }
+
+    if (episodesToCreate.episodesToCreate.length > 0) {
+      await createEpisodesFn(episodesToCreate.episodesToCreate)
     }
   }
 
@@ -146,6 +162,6 @@ export const useShowForm = (titleKey: string | undefined) => {
     seasons,
     onSuccess,
     handleSaveShow,
-    back
+    back,
   }
 }

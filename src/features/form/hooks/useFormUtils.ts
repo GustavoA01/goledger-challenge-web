@@ -42,29 +42,41 @@ export const useFormUtils = ({ seasons, setSeasons }: UseFormUtilsType) => {
     seasons: TvShowFormType["seasons"],
     titleKey: string | undefined,
     tvShowPreviousKey: string | null,
+    previousSeasonsLength: number,
   ) => {
     const seasonsToCreate = []
+    const seasonsToUpdate = []
+
     for (let i = 0; i < Object.keys(seasons).length; i++) {
       const key = titleKey ? tvShowPreviousKey : tvShowKey
-      const seasonToAdd: Omit<SeasonType, "@key"> = {
+      const seasonData: Omit<SeasonType, "@key"> = {
         year: seasons[i].year,
         number: i + 1,
         tvShow: { "@assetType": "tvShows" as const, "@key": key as string },
       }
-      seasonsToCreate.push(seasonToAdd)
+
+      if (i < previousSeasonsLength) {
+        seasonsToUpdate.push(seasonData)
+      } else {
+        seasonsToCreate.push(seasonData)
+      }
     }
-    return seasonsToCreate
+
+    return { seasonsToCreate, seasonsToUpdate }
   }
 
   const getEpisodesData = (
     seasonsResponse: APISeasonResponseType[],
     seasons: TvShowFormType["seasons"],
+    previousEpisodesLength: number[],
   ) => {
     const episodesToCreate = []
+    const episodesToUpdate = []
+
     for (let i = 0; i < seasonsResponse.length; i++) {
       const seasonKey = seasonsResponse[i]["@key"]
       for (let j = 0; j < seasons[i].episodes.length; j++) {
-        const episodeToAdd: Omit<EpisodeType, "@key"> = {
+        const episodeData: Omit<EpisodeType, "@key"> = {
           title: seasons[i].episodes[j].title,
           description: seasons[i].episodes[j].description,
           episodeNumber: j + 1,
@@ -76,13 +88,18 @@ export const useFormUtils = ({ seasons, setSeasons }: UseFormUtilsType) => {
         }
 
         if (seasons[i].episodes[j].rating) {
-          episodeToAdd.rating = seasons[i].episodes[j].rating
+          episodeData.rating = seasons[i].episodes[j].rating
         }
-        episodesToCreate.push(episodeToAdd)
+
+        if( j < previousEpisodesLength[i]) {
+          episodesToUpdate.push(episodeData)
+        }else{
+          episodesToCreate.push(episodeData)
+        }
       }
     }
 
-    return episodesToCreate
+    return { episodesToCreate, episodesToUpdate }
   }
 
   return {
