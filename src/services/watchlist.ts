@@ -1,4 +1,4 @@
-import { api } from "@/lib/axios"
+import { api } from "@/src/lib/axios"
 import { APIWatchlistResponseType, WatchlistType } from "../data/types"
 
 export const createWatchlist = async (
@@ -31,12 +31,15 @@ export const getAllWatchlist = async () => {
 }
 
 export const getWatchlistByKey = async (key: string) => {
-  const response = await api.post<APIWatchlistResponseType>("/query/readAsset", {
-    key: {
-      "@assetType": "watchlist",
-      title: key,
+  const response = await api.post<APIWatchlistResponseType>(
+    "/query/readAsset",
+    {
+      key: {
+        "@assetType": "watchlist",
+        title: key,
+      },
     },
-  })
+  )
   return response.data
 }
 

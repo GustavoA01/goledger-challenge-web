@@ -1,4 +1,4 @@
-import { api } from "@/lib/axios"
+import { api } from "@/src/lib/axios"
 import { APISeasonResponseType, SeasonType } from "../data/types"
 
 export const createSeasons = async (data: Omit<SeasonType, "@key">[]) => {
@@ -69,6 +69,6 @@ export const deleteSeason = async (tvShowKey: string, seasonNumber: number) => {
         },
       },
     },
-  });
-  return response;
-};
+  })
+  return response
+}

@@ -1,21 +1,27 @@
-import { api } from "@/lib/axios"
+import { api } from "@/src/lib/axios"
 import { APIEpisodeResponseType, EpisodeType } from "../data/types"
 
-export const createEpisodes = async (data:  Omit<EpisodeType, "@key">[]) =>{
-  const response =  await api.post<APIEpisodeResponseType[]>("/invoke/createAsset", {
-    asset: data.map((episode) => ({ "@assetType": "episodes", ...episode })),
-  })
+export const createEpisodes = async (data: Omit<EpisodeType, "@key">[]) => {
+  const response = await api.post<APIEpisodeResponseType[]>(
+    "/invoke/createAsset",
+    {
+      asset: data.map((episode) => ({ "@assetType": "episodes", ...episode })),
+    },
+  )
   return response
 }
 
 export const getAllEpisodes = async () => {
-  const response = await api.post<{result: APIEpisodeResponseType[]}>("/query/search", {
-    query: {
-      selector: {
-        "@assetType": "episodes",
+  const response = await api.post<{ result: APIEpisodeResponseType[] }>(
+    "/query/search",
+    {
+      query: {
+        selector: {
+          "@assetType": "episodes",
+        },
       },
     },
-  })
+  )
   return response
 }
 
@@ -37,13 +43,16 @@ export const updateEpisode = async (data: Omit<EpisodeType, "@key">) => {
   const response = await api.put("/invoke/updateAsset", {
     update: {
       "@assetType": "episodes",
-      ...data
+      ...data,
     },
   })
   return response
 }
 
-export const deleteEpisode = async (seasonKey: string, episodeNumber: number) => {
+export const deleteEpisode = async (
+  seasonKey: string,
+  episodeNumber: number,
+) => {
   const response = await api.delete("/invoke/deleteAsset", {
     data: {
       key: {
@@ -55,6 +64,6 @@ export const deleteEpisode = async (seasonKey: string, episodeNumber: number) =>
         },
       },
     },
-  });
-  return response;
-};
+  })
+  return response
+}
