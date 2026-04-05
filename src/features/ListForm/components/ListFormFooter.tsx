@@ -28,7 +28,7 @@ export const ListFormFooter = ({ onSuccess, listTitle }: ListFormFooterProps) =>
         />
       )}
     </div>
-    <div className="space-x-2">
+    <div className="space-x-2 ml-auto">
       <DialogClose asChild disabled={onSuccess !== null}>
         <Button variant="outline">Cancelar</Button>
       </DialogClose>

@@ -6,7 +6,7 @@ import {
 
 export const FormHeader = () => (
   <DialogHeader>
-    <DialogTitle>Criar lista</DialogTitle>
+    <DialogTitle className="max-sm:text-lg">Criar lista</DialogTitle>
     <DialogDescription>
       Crie uma lista para adicionar séries a ela
     </DialogDescription>
