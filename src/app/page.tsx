@@ -54,10 +54,9 @@ const Home = async ({searchParams}:{searchParams: Promise<{ query?: string }>}) 
           </TabsList>
           <TabsContent value="all">
             <div className="flex-col max-sm:space-y-4 sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
               <ShowsTab tvShows={tvShows} />
             </div>
-            <FloatingAddButton url="/nova-serie" />
+            <FloatingAddButton />
           </TabsContent>
           <TabsContent value="favorites">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">

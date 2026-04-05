@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/src/components/ui/dialog"
 import { Trash } from "lucide-react"
-import { useDeleteTvShow } from "../hooks/useDeleteTvShow"
+import { useDeleteShow } from "../hooks/useDeleteShow"
 
 export const ConfirmDelete = ({
   tvShowTitle,
@@ -19,7 +19,7 @@ export const ConfirmDelete = ({
   tvShowTitle: string
   tvShowKey: string
 }) => {
-  const { deleteTvShowFn, isDeleting } = useDeleteTvShow()
+  const { deleteTvShowFn, isDeleting } = useDeleteShow()
 
   return (
     <>

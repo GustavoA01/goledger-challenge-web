@@ -14,7 +14,7 @@ export const ShowForm = ({ titleKey }: { titleKey?: string }) => {
     seasons,
     onSuccess,
     handleSaveShow,
-    back
+    back,
   } = useShowForm(titleKey)
 
   return (

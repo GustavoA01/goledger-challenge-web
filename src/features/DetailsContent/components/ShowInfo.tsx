@@ -1,5 +1,8 @@
 import { Badge } from "@/src/components/ui/badge"
-import { Star } from "lucide-react"
+import { Button } from "@/src/components/ui/button"
+import { Dialog, DialogTrigger } from "@/src/components/ui/dialog"
+import { Bookmark, Star } from "lucide-react"
+import { ListDialog } from "../container/ListDialog"
 
 type ShowInfoProps = {
   title: string
@@ -7,6 +10,7 @@ type ShowInfoProps = {
   rating: string | null
   description: string
   seasonsCount: number
+  tvShowKey: string
 }
 
 export const ShowInfo = ({
@@ -15,6 +19,7 @@ export const ShowInfo = ({
   rating,
   description,
   seasonsCount,
+  tvShowKey,
 }: ShowInfoProps) => (
   <div className="max-w-3xl">
     <h1 className="text-3xl sm:text-5xl font-bold mb-3">{title}</h1>
@@ -36,5 +41,14 @@ export const ShowInfo = ({
     <p className="text-muted-foreground sm:text-lg leading-relaxed">
       {description}
     </p>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button className="mt-8">
+          <Bookmark fill="black" />
+          <p>Adicionar a uma lista</p>
+        </Button>
+      </DialogTrigger>
+      <ListDialog tvShowKey={tvShowKey} />
+    </Dialog> 
   </div>
 )

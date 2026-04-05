@@ -8,8 +8,7 @@ type MainInfoProps = {
 
 export const MainInfo = ({ episodeTitle, date, rating }: MainInfoProps) => (
   <div className="space-y-2">
-    <p className="text-lg">{episodeTitle}</p>
-
+    <p className="text-lg line-clamp-2">{episodeTitle}</p>
     <div className="flex items-center gap-2">
       {rating !== undefined && (
         <div className="flex items-center gap-1">
@@ -17,7 +16,6 @@ export const MainInfo = ({ episodeTitle, date, rating }: MainInfoProps) => (
           <p>{rating}</p>
         </div>
       )}
-
       <div className="flex text-muted-foreground items-center gap-1">
         <Calendar className=" h-4 w-4" />
         <p>{date}</p>

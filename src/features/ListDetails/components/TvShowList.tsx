@@ -18,7 +18,7 @@ export const TvShowList = ({
   handleAddTvShow,
   isUpdating,
 }: TvShowListProps) => (
-  <DialogContent className="h-70 overflow-hidden">
+  <DialogContent className="h-100 overflow-hidden">
     <DialogHeader>
       <DialogTitle>Adicionar Série</DialogTitle>
       <DialogDescription>
@@ -35,7 +35,7 @@ export const TvShowList = ({
           <div
             key={tvShow["@key"]}
             onClick={() => handleAddTvShow(tvShow["@key"])}
-            className="p-2 bg-primary/10 rounded-lg cursor-pointer hover:bg-primary/20 transition-all duration-200"
+            className="text-center p-2 bg-primary/10 rounded-lg cursor-pointer hover:bg-primary/20 transition-all duration-200"
           >
             <h2>{tvShow.title}</h2>
           </div>

@@ -10,6 +10,7 @@ import { AgeSelect } from "@/src/features/form/components/AgeSelect"
 import { useFormContext } from "react-hook-form"
 import { FormLabelInput } from "../../../components/FormLabelInput"
 import { TvShowFormType } from "@/src/data/schemas"
+import { Clapperboard } from "lucide-react"
 
 export const DetailsSection = ({
   disableTitle,
@@ -24,7 +25,10 @@ export const DetailsSection = ({
   return (
     <Card className="bg-muted/10">
       <CardHeader>
-        <CardTitle>Detalhes Principais</CardTitle>
+        <div className="flex items-center gap-2">
+          <Clapperboard className="text-primary" />
+          <CardTitle>Detalhes Principais</CardTitle>
+        </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <FormLabelInput<TvShowFormType>

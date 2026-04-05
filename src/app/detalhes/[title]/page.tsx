@@ -48,6 +48,7 @@ const DetailsPage = async ({
             description={tvShow.description}
             seasonsCount={seasons.length}
             rating={rating}
+            tvShowKey={tvShow["@key"]}
           />
         </div>
       </div>

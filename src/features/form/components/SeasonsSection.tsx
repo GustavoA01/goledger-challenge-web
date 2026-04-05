@@ -11,6 +11,7 @@ import { useFormContext } from "react-hook-form"
 import { TvShowFormType } from "@/src/data/schemas"
 import { Input } from "@/src/components/ui/input"
 import { Label } from "@/src/components/ui/label"
+import { Film } from "lucide-react"
 
 type SeasonsSectionProps = {
   numberOfSeasons: number
@@ -35,7 +36,10 @@ export const SeasonsSection = ({
   return (
     <Card className="bg-muted/10">
       <CardHeader>
-        <CardTitle>Estrutura de Lançamento</CardTitle>
+        <div className="flex gap-2 items-center">
+          <Film className="text-primary" />
+          <CardTitle>Estrutura de Lançamento</CardTitle>
+        </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex gap-2">
