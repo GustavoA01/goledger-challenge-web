@@ -14,7 +14,7 @@ export const AgeSelect = () => (
     render={({ field: { value, onChange } }) => (
       <Select value={value as string} onValueChange={onChange}>
         <SelectTrigger>
-          <SelectValue placeholder="Selecione" />
+          <SelectValue placeholder="Selecione uma idade" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="Livre">Livre</SelectItem>

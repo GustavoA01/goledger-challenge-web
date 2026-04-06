@@ -19,12 +19,12 @@ export const useShowCreate = (
     onSuccess: () => {
       setOnSuccess(1)
     },
-    onError: (error:AxiosError) => {
+    onError: (error: AxiosError) => {
       setOnSuccess(null)
       console.error("Erro ao salvar a série:", error)
       if (error.status === 409) {
         toast.error(
-          "Você não pode adicionar uma série com o mesmo título de um já existente.",
+          "Você não pode adicionar uma série com o título de uma já existente.",
         )
       } else {
         toast.error("Ocorreu um erro ao salvar as informações da série.")
@@ -43,7 +43,7 @@ export const useShowCreate = (
       console.error("Erro ao salvar temporadas:", error)
       if (error.status === 409) {
         toast.error(
-          "Você não pode adicionar uma temporada já existente há uma série.",
+          "Você não pode adicionar uma temporada já existente a uma série.",
         )
       } else {
         toast.error("Ocorreu um erro ao salvar as temporadas.")
@@ -52,16 +52,28 @@ export const useShowCreate = (
   })
 
   const { mutateAsync: createEpisodesFn } = useMutation({
-    mutationFn: async (data: Omit<EpisodeType, "@key">[]) =>
-      services.episodes.createEpisodes(data),
-    onSuccess: () => {
-      if (searchParams.get("title")) {
-        setOnSuccess(3)
-        toast.success("Série atualizada com sucesso!")
-      } else {
-        setOnSuccess(3)
-        toast.success("Série criada com sucesso!")
-        push("/")
+    mutationFn: async (data: {
+      episodes: Omit<EpisodeType, "@key">[]
+      isUpdatingShow: boolean
+    }) => {
+      const createEpisodesResponse = await services.episodes.createEpisodes(
+        data.episodes,
+      )
+      return {
+        episodesCreated: createEpisodesResponse,
+        isUpdatingShow: data.isUpdatingShow,
+      }
+    },
+    onSuccess: (data) => {
+      if (!data.isUpdatingShow) {
+        if (searchParams.get("title")) {
+          setOnSuccess(3)
+          toast.success("Série atualizada com sucesso!")
+        } else {
+          setOnSuccess(3)
+          toast.success("Série criada com sucesso!")
+          push("/")
+        }
       }
     },
     onError: (error: AxiosError) => {
@@ -69,7 +81,7 @@ export const useShowCreate = (
       console.error("Erro ao salvar episódios:", error)
       if (error.status === 409) {
         toast.error(
-          "Você não pode adicionar um episódio já existente há uma série.",
+          "Você não pode adicionar um episódio já existente a uma série.",
         )
       } else {
         toast.error("Ocorreu um erro ao salvar os episódios.")

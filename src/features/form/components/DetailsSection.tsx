@@ -11,12 +11,17 @@ import { useFormContext } from "react-hook-form"
 import { FormLabelInput } from "../../../components/FormLabelInput"
 import { TvShowFormType } from "@/src/data/schemas"
 import { Clapperboard } from "lucide-react"
+import { Spinner } from "@/src/components/ui/spinner"
+
+type DetailsSectionProps = {
+  disableTitle: boolean
+  loadingCurrentShow: boolean
+}
 
 export const DetailsSection = ({
   disableTitle,
-}: {
-  disableTitle?: boolean
-}) => {
+  loadingCurrentShow,
+}: DetailsSectionProps) => {
   const {
     register,
     formState: { errors },
@@ -28,8 +33,17 @@ export const DetailsSection = ({
         <div className="flex items-center gap-2">
           <Clapperboard className="text-primary" />
           <CardTitle>Detalhes Principais</CardTitle>
+          {loadingCurrentShow && (
+            <>
+              <p className="hidden sm:flex animate-pulse text-sm text-primary">
+                Carregando informações...
+              </p>
+              <Spinner className="sm:hidden text-primary" />
+            </>
+          )}
         </div>
       </CardHeader>
+
       <CardContent className="space-y-4">
         <FormLabelInput<TvShowFormType>
           name="title"
@@ -39,7 +53,6 @@ export const DetailsSection = ({
           register={register}
           disabled={disableTitle}
         />
-
         <div className="space-y-2">
           <Label>Descrição (Sinopse)</Label>
           <Textarea

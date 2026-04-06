@@ -17,8 +17,9 @@ export const useShowForm = (titleKey: string | undefined) => {
   const [seasons, setSeasons] = useState<Record<number, { episodes: number }>>({
     0: { episodes: 1 },
   })
+  const [loadingCurrentShow, setLoadingCurrentShow] = useState(false)
   const [previousSeasonsLength, setPreviousSeasonsLength] = useState(0)
-  const [preaviousEpisodesLength, setPreviousEpisodesLength] = useState<
+  const [previousEpisodesLength, setPreviousEpisodesLength] = useState<
     number[]
   >([])
 
@@ -44,6 +45,7 @@ export const useShowForm = (titleKey: string | undefined) => {
   useEffect(() => {
     if (titleKey) {
       const getTvShow = async () => {
+        setLoadingCurrentShow(true)
         const tvShowToUpdate = await services.tvShows.getTvShowByKey(titleKey)
         const seasonsResponse = await services.seasons.getAllSeasons()
         const episodesResponse = await services.episodes.getAllEpisodes()
@@ -96,6 +98,7 @@ export const useShowForm = (titleKey: string | undefined) => {
               : tvShowToUpdate.recommendedAge.toString(),
           seasons: seasonsWithEpisodes,
         })
+        setLoadingCurrentShow(false)
       }
       getTvShow()
     }
@@ -142,15 +145,17 @@ export const useShowForm = (titleKey: string | undefined) => {
     const episodesToCreate = getEpisodesData(
       seasonsResponse,
       data.seasons,
-      preaviousEpisodesLength,
+      previousEpisodesLength,
     )
 
-    if (titleKey) {
-      await updateEpisodesFn(episodesToCreate.episodesToUpdate)
-    }
+    if (titleKey) await updateEpisodesFn(episodesToCreate.episodesToUpdate)
 
     if (episodesToCreate.episodesToCreate.length > 0) {
-      await createEpisodesFn(episodesToCreate.episodesToCreate)
+      const hasEpisodesToUpdate = episodesToCreate.episodesToUpdate.length > 0
+      await createEpisodesFn({
+        episodes: episodesToCreate.episodesToCreate,
+        isUpdatingShow: hasEpisodesToUpdate,
+      })
     }
   }
 
@@ -163,5 +168,6 @@ export const useShowForm = (titleKey: string | undefined) => {
     onSuccess,
     handleSaveShow,
     back,
+    loadingCurrentShow
   }
 }

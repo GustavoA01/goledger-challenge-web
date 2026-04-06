@@ -15,15 +15,19 @@ export const ShowForm = ({ titleKey }: { titleKey?: string }) => {
     onSuccess,
     handleSaveShow,
     back,
+    loadingCurrentShow,
   } = useShowForm(titleKey)
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(handleSaveShow)}
         className="mt-8 space-y-6"
+        onSubmit={methods.handleSubmit(handleSaveShow)}
       >
-        <DetailsSection disableTitle={!!titleKey} />
+        <DetailsSection
+          disableTitle={!!titleKey}
+          loadingCurrentShow={loadingCurrentShow}
+        />
         <SeasonsSection
           seasons={seasons}
           numberOfSeasons={Object.keys(seasons).length}

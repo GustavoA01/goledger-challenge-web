@@ -55,11 +55,8 @@ export const useFormUtils = ({ seasons, setSeasons }: UseFormUtilsType) => {
         tvShow: { "@assetType": "tvShows" as const, "@key": key as string },
       }
 
-      if (i < previousSeasonsLength) {
-        seasonsToUpdate.push(seasonData)
-      } else {
-        seasonsToCreate.push(seasonData)
-      }
+      if (i < previousSeasonsLength) seasonsToUpdate.push(seasonData)
+      else seasonsToCreate.push(seasonData)
     }
 
     return { seasonsToCreate, seasonsToUpdate }
@@ -91,9 +88,9 @@ export const useFormUtils = ({ seasons, setSeasons }: UseFormUtilsType) => {
           episodeData.rating = seasons[i].episodes[j].rating
         }
 
-        if( j < previousEpisodesLength[i]) {
+        if (j < previousEpisodesLength[i]) {
           episodesToUpdate.push(episodeData)
-        }else{
+        } else {
           episodesToCreate.push(episodeData)
         }
       }
