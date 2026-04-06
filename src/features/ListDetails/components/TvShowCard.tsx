@@ -1,12 +1,5 @@
 import { Button } from "@/src/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/src/components/ui/dialog"
 import { Trash } from "lucide-react"
-import Link from "next/link"
-import { RemoveShowModal } from "../container/RemoveShowModal"
 
 type TvShowCardProps = {
   tvShowTitle: string
@@ -24,7 +17,7 @@ export const TvShowCard = ({
   <div className="bg-primary/15 p-4 h-full flex flex-col gap-2 max-h-40 rounded-lg overflow-hidden border hover:border-accent hover:-translate-y-1 transition-all duration-200">
     <div className="flex justify-between">
       <div className="flex-1 cursor-pointer" onClick={onClickCard}>
-        <h2 className="text-xl font-semibold">{tvShowTitle}</h2>
+        <h2 className="text-xl font-semibold line-clamp-2">{tvShowTitle}</h2>
       </div>
       <Button onClick={setRemoveModal} size="sm" variant="outline">
         <Trash className="w-6 h-6" />

@@ -28,17 +28,23 @@ export const ListDetailsContent = ({
   return (
     <main className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {tvShowsAdded.map((tvShow) => (
-          <TvShowCard
-            key={tvShow["@key"]}
-            onClickCard={() =>
-              push(`/detalhes/${encodeURIComponent(tvShow.title)}`)
-            }
-            tvShowTitle={tvShow.title}
-            tvShowDescription={tvShow.description}
-            setRemoveModal={() => handleOpenDialog(tvShow["@key"])}
-          />
-        ))}
+        {tvShowsAdded.length === 0 ? (
+          <p className="text-center text-muted-foreground col-span-full">
+            Nenhuma série adicionada a esta lista ainda
+          </p>
+        ) : (
+          tvShowsAdded.map((tvShow) => (
+            <TvShowCard
+              key={tvShow["@key"]}
+              onClickCard={() =>
+                push(`/detalhes/${encodeURIComponent(tvShow.title)}`)
+              }
+              tvShowTitle={tvShow.title}
+              tvShowDescription={tvShow.description}
+              setRemoveModal={() => handleOpenDialog(tvShow["@key"])}
+            />
+          ))
+        )}
       </div>
       <Dialog open={updateDialog} onOpenChange={setUpdateDialog}>
         <RemoveShowModal
