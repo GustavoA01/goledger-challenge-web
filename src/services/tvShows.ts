@@ -38,23 +38,23 @@ export const deleteTvShowCascade = async (
   tvShowKey: string,
 ) => {
   const seasonsResponse = await services.seasons.getAllSeasons()
+
   if (seasonsResponse === undefined) {
     console.error("Erro ao buscar temporadas para exclusão")
     return
   }
-  const seasons = seasonsResponse.data.result.filter(
-    (s) => s.tvShow["@key"] === tvShowKey,
-  )
 
-  if (seasonsResponse.data.result.length > 0) {
+  const allSeasons = seasonsResponse.data.result
+  const seasons = allSeasons.filter((s) => s.tvShow["@key"] === tvShowKey)
+
+  if (allSeasons.length > 0) {
+    const episodesResponse = await services.episodes.getAllEpisodes()
+    const allEpisodes = episodesResponse?.data.result
+
     for (const season of seasons) {
-      const episodesResponse = await services.episodes.getAllEpisodes()
-      if (
-        episodesResponse === undefined ||
-        episodesResponse.data.result.length === 0
-      )
-        return
-      const episodes = episodesResponse.data.result.filter(
+      if (episodesResponse === undefined || allEpisodes.length === 0) return
+
+      const episodes = allEpisodes.filter(
         (e) => e.season["@key"] === season["@key"],
       )
 

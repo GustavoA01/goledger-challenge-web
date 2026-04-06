@@ -12,14 +12,18 @@ type ShowTabProps = {
 
 export const ShowsTab = ({ tvShows }: ShowTabProps) => (
   <>
-    {tvShows.map((tvShow) => (
-      <TvShowCard
-        key={tvShow["@key"]}
-        title={tvShow.title}
-        recommendedAge={tvShow.recommendedAge}
-        numberOfSeasons={tvShow.numberOfSeasons!}
-        numberOfEpisodes={tvShow.numberOfEpisodes!}
-      />
-    ))}
+    {tvShows.length === 0 ? (
+      <p className="text-center text-muted-foreground mt-8">Nenhuma série encontrada</p>
+    ) : (
+      tvShows.map((tvShow) => (
+        <TvShowCard
+          key={tvShow["@key"]}
+          title={tvShow.title}
+          recommendedAge={tvShow.recommendedAge}
+          numberOfSeasons={tvShow.numberOfSeasons!}
+          numberOfEpisodes={tvShow.numberOfEpisodes!}
+        />
+      ))
+    )}
   </>
 )
