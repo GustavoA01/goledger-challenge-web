@@ -9,24 +9,22 @@ type CardShowContentProps = {
 export const CardShowContent = ({
   numberOfSeasons,
   numberOfEpisodes,
-}: CardShowContentProps) => {
-  return (
-    <CardContent>
-      <div className="flex items-center">
-        {numberOfSeasons > 0 && (
-          <p>
-            {numberOfSeasons > 1
-              ? `${numberOfSeasons} temporadas`
-              : "1 temporada"}
-          </p>
-        )}
-        {numberOfEpisodes > 0 && (
-          <>
-            <Dot className="text-primary" />
-            <p>{numberOfEpisodes} episódios</p>
-          </>
-        )}
-      </div>
-    </CardContent>
-  )
-}
+}: CardShowContentProps) => (
+  <CardContent>
+    <div className="flex items-center">
+      {numberOfSeasons > 0 && (
+        <p>
+          {numberOfSeasons > 1
+            ? `${numberOfSeasons} temporadas`
+            : "1 temporada"}
+        </p>
+      )}
+      {numberOfEpisodes > 0 && (
+        <>
+          <Dot className="text-primary" />
+          <p>{numberOfEpisodes} episódios</p>
+        </>
+      )}
+    </div>
+  </CardContent>
+)

@@ -7,7 +7,11 @@ import { FloatingAddButton } from "../components/FloatingAddButton"
 import { AddToListButton } from "../features/ListForm/container/AddListButton"
 import { ListsTab } from "../components/ListsTab"
 
-const Home = async ({searchParams}:{searchParams: Promise<{ query?: string }>}) => {
+const Home = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ query?: string }>
+}) => {
   const query = (await searchParams).query || ""
   const tvShowsResponse = await services.tvShows.getAllTvShows()
   const episodesResponse = await services.episodes.getAllEpisodes()
@@ -39,26 +43,29 @@ const Home = async ({searchParams}:{searchParams: Promise<{ query?: string }>}) 
     tvShows.push(show)
   }
 
-  tvShows = query !== "" ? tvShows.filter((show) =>
-    show.title.toLowerCase().includes(query.toLowerCase()),
-  ) : tvShows
+  tvShows =
+    query !== ""
+      ? tvShows.filter((show) =>
+          show.title.toLowerCase().includes(query.toLowerCase()),
+        )
+      : tvShows
 
   return (
     <div>
       <Header />
       <main className="container mx-auto p-4 mt-24">
-        <Tabs defaultValue="all">
+        <Tabs defaultValue="tvShows">
           <TabsList className="max-sm:w-full">
-            <TabsTrigger value="all">Séries</TabsTrigger>
-            <TabsTrigger value="favorites">Listas</TabsTrigger>
+            <TabsTrigger value="tvShows">Séries</TabsTrigger>
+            <TabsTrigger value="watchLists">Listas</TabsTrigger>
           </TabsList>
-          <TabsContent value="all">
+          <TabsContent value="tvShows">
             <div className="flex-col max-sm:space-y-4 sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <ShowsTab tvShows={tvShows} />
             </div>
             <FloatingAddButton />
           </TabsContent>
-          <TabsContent value="favorites">
+          <TabsContent value="watchLists">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               <AddToListButton />
               <ListsTab lists={watchLists.data.result} />

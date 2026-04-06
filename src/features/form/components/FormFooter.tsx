@@ -34,7 +34,7 @@ export const FormFooter = ({ onSuccess, goBack }: FormFooterProps) => (
       />
     )}
     <div className="space-x-2 ml-auto">
-      <Button disabled={onSuccess !== null} variant="outline" type="button" onClick={goBack}>
+      <Button disabled={onSuccess !== null} variant="outline" onClick={goBack}>
         {onSuccess !== null ? "Aguarde" : "Cancelar"}
       </Button>
       <Button disabled={onSuccess !== null}>Salvar</Button>

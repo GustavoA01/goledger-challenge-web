@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation"
 type TvShowCardProps = Omit<TvShowType, "@key" | "description"> & {
   numberOfSeasons: number
   numberOfEpisodes: number
-  recommendedAge: number
 }
 
 export const TvShowCard = ({

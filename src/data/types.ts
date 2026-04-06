@@ -12,7 +12,7 @@ export interface APITvShowsResponseType {
 
 export type TvShowType = Pick<
   APITvShowsResponseType,
-  "@key" | "description" | "recommendedAge" | "title" | "recommendedAge"
+  "@key" | "title" | "description" | "recommendedAge" 
 >
 
 export interface APISeasonResponseType {
