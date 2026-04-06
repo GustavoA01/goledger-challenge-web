@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useShowMutation } from "./useShowMutation"
 import { useFormUtils } from "./useFormUtils"
+import { toast } from "sonner"
 
 export const useShowForm = (titleKey: string | undefined) => {
   const methods = useForm<TvShowFormType>({
@@ -46,59 +47,65 @@ export const useShowForm = (titleKey: string | undefined) => {
     if (titleKey) {
       const getTvShow = async () => {
         setLoadingCurrentShow(true)
-        const tvShowToUpdate = await services.tvShows.getTvShowByKey(titleKey)
-        const seasonsResponse = await services.seasons.getAllSeasons()
-        const episodesResponse = await services.episodes.getAllEpisodes()
-        setTvShowPreviousKey(tvShowToUpdate["@key"])
+        try {
+          const tvShowToUpdate = await services.tvShows.getTvShowByKey(titleKey)
+          const seasonsResponse = await services.seasons.getAllSeasons()
+          const episodesResponse = await services.episodes.getAllEpisodes()
+          setTvShowPreviousKey(tvShowToUpdate["@key"])
 
-        const seasons =
-          seasonsResponse?.data.result
-            .filter(
-              (season) => season.tvShow["@key"] === tvShowToUpdate["@key"],
-            )
-            .sort((a, b) => a.number - b.number) || []
+          const seasons =
+            seasonsResponse?.data.result
+              .filter(
+                (season) => season.tvShow["@key"] === tvShowToUpdate["@key"],
+              )
+              .sort((a, b) => a.number - b.number) || []
 
-        const episodes = episodesResponse?.data.result.filter((episode) =>
-          seasons.some((season) => episode.season["@key"] === season["@key"]),
-        )
+          const episodes = episodesResponse?.data.result.filter((episode) =>
+            seasons.some((season) => episode.season["@key"] === season["@key"]),
+          )
 
-        const previousEpisodesCount = seasons.map(
-          (season) =>
-            episodes.filter(
-              (episode) => episode.season["@key"] === season["@key"],
-            ).length || 0,
-        )
+          const previousEpisodesCount = seasons.map(
+            (season) =>
+              episodes.filter(
+                (episode) => episode.season["@key"] === season["@key"],
+              ).length || 0,
+          )
 
-        setPreviousSeasonsLength(seasons.length)
-        setPreviousEpisodesLength(previousEpisodesCount)
+          setPreviousSeasonsLength(seasons.length)
+          setPreviousEpisodesLength(previousEpisodesCount)
 
-        const seasonsData = seasons.map((season, i) => ({
-          number: i,
-          episodes: episodes.filter(
-            (ep) => ep.season["@key"] === season["@key"],
-          ).length,
-        }))
+          const seasonsData = seasons.map((season, i) => ({
+            number: i,
+            episodes: episodes.filter(
+              (ep) => ep.season["@key"] === season["@key"],
+            ).length,
+          }))
 
-        setSeasons(seasonsData)
+          setSeasons(seasonsData)
 
-        const seasonsWithEpisodes = seasons.map((season) => ({
-          year: season.year,
-          episodes: episodes
-            .filter((ep) => ep.season["@key"] === season["@key"])
-            .map((ep) => ({ ...ep, releaseDate: new Date(ep.releaseDate) }))
-            .sort((a, b) => a.episodeNumber - b.episodeNumber),
-        }))
+          const seasonsWithEpisodes = seasons.map((season) => ({
+            year: season.year,
+            episodes: episodes
+              .filter((ep) => ep.season["@key"] === season["@key"])
+              .map((ep) => ({ ...ep, releaseDate: new Date(ep.releaseDate) }))
+              .sort((a, b) => a.episodeNumber - b.episodeNumber),
+          }))
 
-        methods.reset({
-          title: tvShowToUpdate.title,
-          description: tvShowToUpdate.description,
-          recommendedAge:
-            tvShowToUpdate.recommendedAge === 0
-              ? "Livre"
-              : tvShowToUpdate.recommendedAge.toString(),
-          seasons: seasonsWithEpisodes,
-        })
-        setLoadingCurrentShow(false)
+          methods.reset({
+            title: tvShowToUpdate.title,
+            description: tvShowToUpdate.description,
+            recommendedAge:
+              tvShowToUpdate.recommendedAge === 0
+                ? "Livre"
+                : tvShowToUpdate.recommendedAge.toString(),
+            seasons: seasonsWithEpisodes,
+          })
+        } catch (error) {
+          console.error("Erro ao carregar os dados da série:", error)
+          toast.error("Ocorreu um erro ao carregar os dados da série.")
+        } finally {
+          setLoadingCurrentShow(false)
+        }
       }
       getTvShow()
     }
@@ -168,6 +175,6 @@ export const useShowForm = (titleKey: string | undefined) => {
     onSuccess,
     handleSaveShow,
     back,
-    loadingCurrentShow
+    loadingCurrentShow,
   }
 }
